@@ -1,7 +1,7 @@
 /*
  *  File: xosd_wrap.c
  *  Created: Sunday, October 10, 2004
- *  Time-stamp: <19/10/2004 17:00:38 Yann Hodique>
+ *  Time-stamp: <07/01/2005 02:39:25 Yann Hodique>
  *  Copyright: Yann Hodique
  *  Email: Yann.Hodique@lifl.fr
  */
@@ -21,11 +21,7 @@
 
 static scm_t_bits xosd_tag;
 
-typedef struct xosd_wrap {
-    xosd * osd;
-} xosd_wrap;
-
-#define XOSD(x) (((xosd_wrap *) SCM_SMOB_DATA(x))->osd)
+#define XOSD(x) ((xosd *) SCM_SMOB_DATA(x))
 
 int xosd_display_percentage(xosd * osd, int line, int per) {
     return xosd_display(osd,line,XOSD_percentage,per);
@@ -255,13 +251,10 @@ static SCM _wrap_xosd_display_slider(SCM osd, SCM line, SCM per) {
 }
 
 static SCM make_xosd(SCM n) {
-    xosd_wrap * w;
+    xosd * w;
 
     SCM_ASSERT(SCM_INUMP(n), n, SCM_ARG1, "make-xosd");
-
-    w = scm_must_malloc(sizeof(xosd_wrap), "xosd");
-    w->osd = xosd_create(SCM_INUM(n));
-
+    w = xosd_create(SCM_INUM(n));
     SCM_RETURN_NEWSMOB(xosd_tag, w);
 }
 
@@ -270,15 +263,14 @@ static SCM mark_xosd(SCM xosd_smob) {
 }
 
 static size_t free_xosd(SCM xosd_smob) {
-    xosd_wrap *osd_w = (xosd_wrap *) SCM_SMOB_DATA(xosd_smob);
-    xosd_destroy(osd_w->osd);
-    free(osd_w);
-    return sizeof(xosd_wrap);
+    xosd * osd = XOSD(xosd_smob);
+    xosd_destroy(osd);
+    return sizeof(xosd*);
 }
 
 /* Linkage: module */
 static void init_helper(void *data) {
-    xosd_tag = scm_make_smob_type("xosd",sizeof(xosd_wrap));
+    xosd_tag = scm_make_smob_type("xosd",sizeof(xosd*));
     scm_set_smob_mark(xosd_tag,mark_xosd);
     scm_set_smob_free(xosd_tag,free_xosd);
 
