@@ -1,0 +1,8 @@
+To compile this library, you need:
+- guile (with development files)
+- gcc
+
+build it by :
+make
+
+install it somewhere in you %load-path

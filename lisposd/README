@@ -1,0 +1,26 @@
+(osd) enables you to use the libxosd project in you guile applications
+
+For details on how to use xosd, please refer to xosd documentation, the functions are translated as is in guile.
+Exceptions:
+- the xosd_display function is splitted in 3 guile functions:
+  * xosd-display-percentage
+  * xosd-display-string
+  * xosd-display-slider
+- the xosd_get_colour returns a list instead of having out parameters
+
+Note that constants XOSD_top, XOSD_center, etc. have been replaced by symbols
+
+the xosd-display-printf was dropped because:
+- it is probably hard to implement (I don't know how to wrap a variable arguments function)
+- it is useless since you can do the (format) in scheme and then call xosd-display-string
+
+The name of the module is "xosdguile". You have to put it somewhere in your %load-path
+
+An example of how you can use it:
+
+(use-modules (xosdguile))
+(define osd (make-xosd 2))
+(xosd-set-timeout! osd 5)
+(xosd-set-pos! osd 'top)
+(xosd-set-align! osd 'center)
+(xosd-display-string osd 0 "Plopor !")
