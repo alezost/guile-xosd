@@ -172,7 +172,7 @@ static SCM _wrap_xosd_set_outline_colour(SCM osd, SCM str) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-outline-colour!");
     SCM_ASSERT(scm_is_string(str), str, SCM_ARG2, "xosd-set-outline-coulour!");
 
-    xosd_set_outline_colour(XOSD(osd),SCM_STRING_CHARS(str));
+    xosd_set_outline_colour(XOSD(osd), scm_to_locale_string(str));
 
     return SCM_UNSPECIFIED;
 }
@@ -181,7 +181,7 @@ static SCM _wrap_xosd_set_shadow_colour(SCM osd, SCM str) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-shadow-colour!");
     SCM_ASSERT(scm_is_string(str), str, SCM_ARG2, "xosd-set-shadow-coulour!");
 
-    xosd_set_shadow_colour(XOSD(osd),SCM_STRING_CHARS(str));
+    xosd_set_shadow_colour(XOSD(osd), scm_to_locale_string(str));
 
     return SCM_UNSPECIFIED;
 }
@@ -190,7 +190,7 @@ static SCM _wrap_xosd_set_colour(SCM osd, SCM str) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-colour!");
     SCM_ASSERT(scm_is_string(str), str, SCM_ARG2, "xosd-set-colour!");
 
-    xosd_set_colour(XOSD(osd),SCM_STRING_CHARS(str));
+    xosd_set_colour(XOSD(osd), scm_to_locale_string(str));
 
     return SCM_UNSPECIFIED;
 }
@@ -199,7 +199,7 @@ static SCM _wrap_xosd_set_font(SCM osd, SCM str) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-font!");
     SCM_ASSERT(scm_is_string(str), str, SCM_ARG2, "xosd-set-font!");
 
-    xosd_set_font(XOSD(osd),SCM_STRING_CHARS(str));
+    xosd_set_font(XOSD(osd), scm_to_locale_string(str));
 
     return SCM_UNSPECIFIED;
 }
@@ -228,7 +228,7 @@ static SCM _wrap_xosd_display_string(SCM osd, SCM line, SCM str) {
     SCM_ASSERT(scm_is_integer(line), line, SCM_ARG2, "xosd-display-string");
     SCM_ASSERT(scm_is_string(str), str, SCM_ARG3, "xosd-display-string");
 
-    xosd_display_string(XOSD(osd),scm_to_int(line),SCM_STRING_CHARS(str));
+    xosd_display_string(XOSD(osd), scm_to_int(line), scm_to_locale_string(str));
 
     return SCM_UNSPECIFIED;
 }
