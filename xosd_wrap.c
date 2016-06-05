@@ -209,7 +209,10 @@ static SCM _wrap_xosd_get_colour(SCM osd) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-get-colour");
 
     xosd_get_colour(XOSD(osd),&r,&g,&b);
-    return scm_cons(SCM_MAKINUM(r),scm_cons(SCM_MAKINUM(g),scm_cons(SCM_MAKINUM(b), SCM_EOL)));
+    return scm_cons(scm_from_int(r),
+                    scm_cons(scm_from_int(g),
+                             scm_cons(scm_from_int(b),
+                                      SCM_EOL)));
 }
 
 static SCM _wrap_xosd_get_number_lines(SCM osd) {
@@ -217,7 +220,7 @@ static SCM _wrap_xosd_get_number_lines(SCM osd) {
 
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-get-number-lines");
     lines = xosd_get_number_lines(XOSD(osd));
-    return SCM_MAKINUM(lines);
+    return scm_from_int(lines);
 }
 
 static SCM _wrap_xosd_display_string(SCM osd, SCM line, SCM str) {
