@@ -76,15 +76,17 @@ static SCM _wrap_xosd_show(SCM osd) {
 
 static SCM _wrap_xosd_set_pos(SCM osd, SCM pos) {
     int xosd_pos;
+    char *pos_str;
 
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-pos!");
     SCM_ASSERT(scm_is_symbol(pos), pos, SCM_ARG2, "xosd-set-pos!");
 
-    if(!strcmp("top",SCM_SYMBOL_CHARS(pos)))
+    pos_str = scm_to_locale_string(scm_symbol_to_string(pos));
+    if (!strcmp("top", pos_str))
         xosd_pos = XOSD_top;
-    else if(!strcmp("bottom",SCM_SYMBOL_CHARS(pos)))
+    else if (!strcmp("bottom", pos_str))
         xosd_pos = XOSD_bottom;
-    else if(!strcmp("middle",SCM_SYMBOL_CHARS(pos)))
+    else if (!strcmp("middle", pos_str))
         xosd_pos = XOSD_middle;
     else /* throw an error? */
         return SCM_BOOL_F;
@@ -96,15 +98,17 @@ static SCM _wrap_xosd_set_pos(SCM osd, SCM pos) {
 
 static SCM _wrap_xosd_set_align(SCM osd, SCM align) {
     int xosd_align;
+    char *align_str;
 
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-align!");
     SCM_ASSERT(scm_is_symbol(align), align, SCM_ARG2, "xosd-set-align!");
 
-    if (!strcmp("left", SCM_SYMBOL_CHARS(align)))
+    align_str = scm_to_locale_string(scm_symbol_to_string(align));
+    if (!strcmp("left", align_str))
         xosd_align = XOSD_left;
-    else if (!strcmp("right", SCM_SYMBOL_CHARS(align)))
+    else if (!strcmp("right", align_str))
         xosd_align = XOSD_right;
-    else if (!strcmp("center", SCM_SYMBOL_CHARS(align)))
+    else if (!strcmp("center", align_str))
         xosd_align = XOSD_center;
     else /* throw an error? */
         return SCM_BOOL_F;
