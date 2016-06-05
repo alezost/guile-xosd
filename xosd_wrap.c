@@ -40,7 +40,7 @@ static SCM _wrap_xosd_set_bar_length(SCM osd, SCM n) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-bar-length!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-set-bar-length!");
 
-    xosd_set_bar_length(XOSD(osd),SCM_INUM(n));
+    xosd_set_bar_length(XOSD(osd), scm_to_int(n));
 
     return SCM_UNSPECIFIED;
 }
@@ -118,7 +118,7 @@ static SCM _wrap_xosd_set_shadow_offset(SCM osd, SCM n) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-shadow-offset!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-set-shadow-offset!");
 
-    xosd_set_timeout(XOSD(osd),SCM_INUM(n));
+    xosd_set_timeout(XOSD(osd), scm_to_int(n));
 
     return SCM_UNSPECIFIED;
 }
@@ -127,7 +127,7 @@ static SCM _wrap_xosd_set_outline_offset(SCM osd, SCM n) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-outline-offset!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-set-outline-offset!");
 
-    xosd_set_timeout(XOSD(osd),SCM_INUM(n));
+    xosd_set_timeout(XOSD(osd), scm_to_int(n));
 
     return SCM_UNSPECIFIED;
 }
@@ -136,7 +136,7 @@ static SCM _wrap_xosd_set_horizontal_offset(SCM osd, SCM n) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-horizontal-offset!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-set-horizontal-offset!");
 
-    xosd_set_horizontal_offset(XOSD(osd),SCM_INUM(n));
+    xosd_set_horizontal_offset(XOSD(osd), scm_to_int(n));
 
     return SCM_UNSPECIFIED;
 }
@@ -145,7 +145,7 @@ static SCM _wrap_xosd_set_vertical_offset(SCM osd, SCM n) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-vertival-offset!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-set-vertical-offset!");
 
-    xosd_set_vertical_offset(XOSD(osd),SCM_INUM(n));
+    xosd_set_vertical_offset(XOSD(osd), scm_to_int(n));
 
     return SCM_UNSPECIFIED;
 }
@@ -154,7 +154,7 @@ static SCM _wrap_xosd_set_timeout(SCM osd, SCM time) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-timeout!");
     SCM_ASSERT(scm_is_integer(time), time, SCM_ARG2, "xosd-set-timeout!");
 
-    xosd_set_timeout(XOSD(osd),SCM_INUM(time));
+    xosd_set_timeout(XOSD(osd), scm_to_int(time));
 
     return SCM_UNSPECIFIED;
 }
@@ -163,7 +163,7 @@ static SCM _wrap_xosd_scroll(SCM osd, SCM n) {
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-scroll");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-scroll");
 
-    xosd_scroll(XOSD(osd),SCM_INUM(n));
+    xosd_scroll(XOSD(osd), scm_to_int(n));
 
     return SCM_UNSPECIFIED;
 }
@@ -225,7 +225,7 @@ static SCM _wrap_xosd_display_string(SCM osd, SCM line, SCM str) {
     SCM_ASSERT(scm_is_integer(line), line, SCM_ARG2, "xosd-display-string");
     SCM_ASSERT(SCM_STRINGP(str), str, SCM_ARG3, "xosd-display-string");
 
-    xosd_display_string(XOSD(osd),SCM_INUM(line),SCM_STRING_CHARS(str));
+    xosd_display_string(XOSD(osd),scm_to_int(line),SCM_STRING_CHARS(str));
 
     return SCM_UNSPECIFIED;
 }
@@ -235,7 +235,7 @@ static SCM _wrap_xosd_display_percentage(SCM osd, SCM line, SCM per) {
     SCM_ASSERT(scm_is_integer(line), line, SCM_ARG2, "xosd-display-percentage");
     SCM_ASSERT(scm_is_integer(per), per, SCM_ARG3, "xosd-display-percentage");
 
-    xosd_display_percentage(XOSD(osd),SCM_INUM(line),SCM_INUM(per));
+    xosd_display_percentage(XOSD(osd), scm_to_int(line), scm_to_int(per));
 
     return SCM_UNSPECIFIED;
 }
@@ -245,7 +245,7 @@ static SCM _wrap_xosd_display_slider(SCM osd, SCM line, SCM per) {
     SCM_ASSERT(scm_is_integer(line), line, SCM_ARG2, "xosd-display-slider");
     SCM_ASSERT(scm_is_integer(per), per, SCM_ARG3, "xosd-display-slider");
 
-    xosd_display_slider(XOSD(osd),SCM_INUM(line),SCM_INUM(per));
+    xosd_display_slider(XOSD(osd), scm_to_int(line), scm_to_int(per));
 
     return SCM_UNSPECIFIED;
 }
@@ -254,7 +254,7 @@ static SCM make_xosd(SCM n) {
     xosd * w;
 
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG1, "make-xosd");
-    w = xosd_create(SCM_INUM(n));
+    w = xosd_create(scm_to_int(n));
     SCM_RETURN_NEWSMOB(xosd_tag, w);
 }
 
