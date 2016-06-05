@@ -94,22 +94,22 @@ static SCM _wrap_xosd_set_pos(SCM osd, SCM pos) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM _wrap_xosd_set_align(SCM osd, SCM pos) {
-    int xosd_pos;
+static SCM _wrap_xosd_set_align(SCM osd, SCM align) {
+    int xosd_align;
 
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-align!");
-    SCM_ASSERT(scm_is_symbol(pos), pos, SCM_ARG2, "xosd-set-align!");
+    SCM_ASSERT(scm_is_symbol(align), align, SCM_ARG2, "xosd-set-align!");
 
-    if(!strcmp("left",SCM_SYMBOL_CHARS(pos)))
-        xosd_pos = XOSD_left;
-    else if(!strcmp("right",SCM_SYMBOL_CHARS(pos)))
-        xosd_pos = XOSD_right;
-    else if(!strcmp("center",SCM_SYMBOL_CHARS(pos)))
-        xosd_pos = XOSD_center;
+    if (!strcmp("left", SCM_SYMBOL_CHARS(align)))
+        xosd_align = XOSD_left;
+    else if (!strcmp("right", SCM_SYMBOL_CHARS(align)))
+        xosd_align = XOSD_right;
+    else if (!strcmp("center", SCM_SYMBOL_CHARS(align)))
+        xosd_align = XOSD_center;
     else /* throw an error? */
         return SCM_BOOL_F;
 
-    xosd_set_align(XOSD(osd),xosd_pos);
+    xosd_set_align(XOSD(osd),xosd_align);
 
     return SCM_UNSPECIFIED;
 }
