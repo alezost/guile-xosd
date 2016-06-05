@@ -78,7 +78,7 @@ static SCM _wrap_xosd_set_pos(SCM osd, SCM pos) {
     int xosd_pos;
 
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-pos!");
-    SCM_ASSERT(SCM_SYMBOLP(pos),pos, SCM_ARG2, "xosd-set-pos!");
+    SCM_ASSERT(scm_is_symbol(pos), pos, SCM_ARG2, "xosd-set-pos!");
 
     if(!strcmp("top",SCM_SYMBOL_CHARS(pos)))
         xosd_pos = XOSD_top;
@@ -98,7 +98,7 @@ static SCM _wrap_xosd_set_align(SCM osd, SCM pos) {
     int xosd_pos;
 
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-align!");
-    SCM_ASSERT(SCM_SYMBOLP(pos),pos, SCM_ARG2, "xosd-set-align!");
+    SCM_ASSERT(scm_is_symbol(pos), pos, SCM_ARG2, "xosd-set-align!");
 
     if(!strcmp("left",SCM_SYMBOL_CHARS(pos)))
         xosd_pos = XOSD_left;
