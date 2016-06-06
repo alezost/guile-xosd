@@ -1,19 +1,25 @@
-/*
- *  File: xosd_wrap.c
- *  Created: Sunday, October 10, 2004
- *  Time-stamp: <07/01/2005 02:39:25 Yann Hodique>
- *  Copyright: Yann Hodique
- *  Email: Yann.Hodique@lifl.fr
+/* libguile-xosd.c --- Guile bindings for libxosd
+ *
+ * Copyright (C) 2004, 2005 Yann Hodique <Yann.Hodique@lifl.fr>
+ * Copyright (C) 2016 Alex Kost <alezost@gmail.com>
+ *
+ * Created: 10 Oct 2004
+ *
+ * This file is part of Guile-XOSD.
+ *
+ * Guile-XOSD is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Guile-XOSD is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-/************************************************************************
- *                                                                      *
- * This program is free software; you can redistribute it and/or modify *
- * it under the terms of the GNU General Public License as published by *
- * the Free Software Foundation; either version 2 of the License, or    *
- * (at your option) any later version.                                  *
- *                                                                      *
- ************************************************************************/
 
 #include <string.h>
 #include <libguile.h>
