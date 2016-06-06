@@ -4,12 +4,12 @@ CFLAGS = -Wall -ansi -pedantic
 
 TARGET = libguile-xosd.so
 
-SOURCES = xosd_wrap.c
+SOURCE = src/libguile-xosd.c
 
 all: $(TARGET)
 
-$(TARGET): $(SOURCES)
-	$(CC) $(CFLAGS) -shared -o $(TARGET) -lxosd xosd_wrap.c
+$(TARGET): $(SOURCE)
+	$(CC) $(CFLAGS) -shared -o $(TARGET) -lxosd $(SOURCE)
 
 clean:
 	$(RM) $(TARGET)
