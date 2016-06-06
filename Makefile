@@ -2,7 +2,7 @@ CC = gcc
 
 CFLAGS = -Wall -ansi -pedantic
 
-TARGET = libxosdguile.so
+TARGET = libguile-xosd.so
 
 SOURCES = xosd_wrap.c
 
