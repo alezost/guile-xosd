@@ -17,6 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = src
+SUBDIRS = modules src
+
+clean-go:
+	@cd modules; make clean-go
+
+.PHONY: clean-go
 
 # Makefile.am ends here

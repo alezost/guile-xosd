@@ -29,6 +29,15 @@ AM_INIT_AUTOMAKE([foreign subdir-objects])
 AC_PROG_CC
 AC_PROG_LIBTOOL
 
+LIBRARY_NAME="libguile-xosd"
+AC_SUBST([LIBRARY_NAME])
+
+dnl Check for Guile.
+
+PKG_CHECK_MODULES([GUILE], [guile-2.0 >= 2.0.2])
+GUILE_PKG
+GUILE_PROGS
+
 dnl Check for libxosd.  Unfortunately, libxosd does not provide
 dnl pkgconfig file, but it has 'xosd-config' script that can be used to
 dnl define cflags and libs.
@@ -45,6 +54,8 @@ else
 fi
 
 AC_CONFIG_FILES([Makefile
+                 modules/Makefile
+                 modules/xosd/config.scm
                  src/Makefile])
 
 AC_OUTPUT

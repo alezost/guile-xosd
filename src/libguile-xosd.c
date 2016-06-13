@@ -282,7 +282,7 @@ static size_t free_xosd(SCM xosd_smob) {
 }
 
 /* Linkage: module */
-static void init_helper(void *data) {
+void init_xosd(void) {
     xosd_tag = scm_make_smob_type("xosd",sizeof(xosd*));
     scm_set_smob_mark(xosd_tag,mark_xosd);
     scm_set_smob_free(xosd_tag,free_xosd);
@@ -338,9 +338,4 @@ static void init_helper(void *data) {
                  NULL);
 }
 
-SCM
-scm_init_xosdguile_module (void) {
-    SCM module;
-    module = scm_c_define_module("xosdguile", init_helper, NULL);
-    return SCM_UNSPECIFIED;
-}
+/* libguile-xosd.c ends here */
