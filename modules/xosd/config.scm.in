@@ -60,7 +60,8 @@ to find out the value of 'exec_prefix' at first, etc."
   "@LIBRARY_NAME@")
 
 (define %library-directory
-  (config-lookup "libdir"))
+  (or (getenv "GUILE_XOSD_LIBDIR")
+      (config-lookup "libdir")))
 
 ;; File name of the library without extension.
 (define %library-file-name
