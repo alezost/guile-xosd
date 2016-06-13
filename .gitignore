@@ -8,6 +8,7 @@
 *~
 tmp
 /build-aux
+/pre-inst-env
 .deps
 .dirstamp
 .libs

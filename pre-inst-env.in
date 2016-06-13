@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# pre-inst-env --- Pre-installation environment for Guile-XOSD
+
+# Copyright (C) 2016 Alex Kost <alezost@gmail.com>
+
+# This file is part of Guile-XOSD.
+
+# Guile-XOSD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Guile-XOSD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
+
+usage () {
+    echo 'Usage: '"$0"' COMMAND ARG...
+Run COMMAND in a pre-installation environment.
+
+Particularly, this script allows you to use (xosd) module in a Guile
+REPL, if Guile is started like this: "./pre-inst-env guile".'
+}
+
+set_env () {
+    src_modules="@abs_top_srcdir@/modules"
+    build_modules="@abs_top_builddir@/modules"
+
+    GUILE_LOAD_COMPILED_PATH="${build_modules}${GUILE_LOAD_COMPILED_PATH:+:}$GUILE_LOAD_COMPILED_PATH"
+    GUILE_LOAD_PATH="${src_modules}:${build_modules}${GUILE_LOAD_PATH:+:}$GUILE_LOAD_PATH"
+    export GUILE_LOAD_COMPILED_PATH GUILE_LOAD_PATH
+
+    GUILE_XOSD_LIBDIR="@abs_top_builddir@/src/.libs"
+    export GUILE_XOSD_LIBDIR
+}
+
+case "$1" in
+    -h | --help)
+        usage
+        exit 0 ;;
+    *)
+        set_env
+        exec "$@" ;;
+esac
+
+# pre-inst-env ends here
