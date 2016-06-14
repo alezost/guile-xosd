@@ -28,4 +28,6 @@
 
 (dynamic-call "init_xosd" (dynamic-link %library-file-name))
 
+(define-public make-xosd xosd-create)
+
 ;;; xosd.scm ends here

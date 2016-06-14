@@ -263,10 +263,10 @@ static SCM scm_xosd_display_slider(SCM osd, SCM line, SCM per) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM make_xosd(SCM n) {
+static SCM scm_xosd_create(SCM n) {
     xosd * w;
 
-    SCM_ASSERT(scm_is_integer(n), n, SCM_ARG1, "make-xosd");
+    SCM_ASSERT(scm_is_integer(n), n, SCM_ARG1, "xosd-create");
     w = xosd_create(scm_to_int(n));
     SCM_RETURN_NEWSMOB(xosd_tag, w);
 }
@@ -287,8 +287,7 @@ void init_xosd(void) {
     scm_set_smob_mark(xosd_tag,mark_xosd);
     scm_set_smob_free(xosd_tag,free_xosd);
 
-    scm_c_define_gsubr("make-xosd", 1, 0, 0, make_xosd);
-
+    scm_c_define_gsubr("xosd-create", 1, 0, 0, scm_xosd_create);
     scm_c_define_gsubr("xosd-set-bar-length!", 2, 0, 0, scm_xosd_set_bar_length);
     scm_c_define_gsubr("xosd-onscreen?", 1, 0, 0, scm_xosd_is_onscreen);
     scm_c_define_gsubr("xosd-wait-until-no-display", 1, 0, 0, scm_xosd_wait_until_no_display);
@@ -312,7 +311,7 @@ void init_xosd(void) {
     scm_c_define_gsubr("xosd-display-slider", 3, 0, 0, scm_xosd_display_slider);
     scm_c_define_gsubr("xosd-display-string", 3, 0, 0, scm_xosd_display_string);
 
-    scm_c_export("make-xosd",
+    scm_c_export("xosd-create",
                  "xosd-set-bar-length!",
                  "xosd-onscreen?",
                  "xosd-wait-until-no-display",
