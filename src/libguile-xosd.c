@@ -29,19 +29,6 @@ static scm_t_bits xosd_tag;
 
 #define XOSD(x) ((xosd *) SCM_SMOB_DATA(x))
 
-int xosd_display_percentage(xosd * osd, int line, int per) {
-    return xosd_display(osd,line,XOSD_percentage,per);
-}
-
-int xosd_display_string(xosd * osd, int line, char * str) {
-    return xosd_display(osd,line,XOSD_string,str);
-
-}
-
-int xosd_display_slider(xosd * osd, int line, int slide) {
-    return xosd_display(osd,line,XOSD_slider,slide);
-}
-
 SCM_DEFINE_PUBLIC (scm_xosd_set_bar_length,
                    "xosd-set-bar-length!",
                    2, 0, 0,
@@ -338,7 +325,8 @@ SCM_DEFINE_PUBLIC (scm_xosd_display_string,
     SCM_ASSERT(scm_is_integer(line), line, SCM_ARG2, "xosd-display-string");
     SCM_ASSERT(scm_is_string(str), str, SCM_ARG3, "xosd-display-string");
 
-    xosd_display_string(XOSD(osd), scm_to_int(line), scm_to_locale_string(str));
+    xosd_display(XOSD(osd), scm_to_int(line),
+                 XOSD_string, scm_to_locale_string(str));
 
     return SCM_UNSPECIFIED;
 }
@@ -353,7 +341,8 @@ SCM_DEFINE_PUBLIC (scm_xosd_display_percentage,
     SCM_ASSERT(scm_is_integer(line), line, SCM_ARG2, "xosd-display-percentage");
     SCM_ASSERT(scm_is_integer(per), per, SCM_ARG3, "xosd-display-percentage");
 
-    xosd_display_percentage(XOSD(osd), scm_to_int(line), scm_to_int(per));
+    xosd_display(XOSD(osd), scm_to_int(line),
+                 XOSD_percentage, scm_to_int(per));
 
     return SCM_UNSPECIFIED;
 }
@@ -368,7 +357,8 @@ SCM_DEFINE_PUBLIC (scm_xosd_display_slider,
     SCM_ASSERT(scm_is_integer(line), line, SCM_ARG2, "xosd-display-slider");
     SCM_ASSERT(scm_is_integer(per), per, SCM_ARG3, "xosd-display-slider");
 
-    xosd_display_slider(XOSD(osd), scm_to_int(line), scm_to_int(per));
+    xosd_display(XOSD(osd), scm_to_int(line),
+                 XOSD_slider, scm_to_int(per));
 
     return SCM_UNSPECIFIED;
 }
