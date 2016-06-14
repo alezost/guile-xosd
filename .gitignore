@@ -5,6 +5,7 @@
 *.o
 *.so
 *.tar.gz
+*.x
 *~
 tmp
 /build-aux

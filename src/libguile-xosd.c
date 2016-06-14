@@ -42,7 +42,12 @@ int xosd_display_slider(xosd * osd, int line, int slide) {
     return xosd_display(osd,line,XOSD_slider,slide);
 }
 
-static SCM scm_xosd_set_bar_length(SCM osd, SCM n) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_bar_length,
+                   "xosd-set-bar-length!",
+                   2, 0, 0,
+                   (SCM osd, SCM n),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-bar-length!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-set-bar-length!");
 
@@ -51,12 +56,22 @@ static SCM scm_xosd_set_bar_length(SCM osd, SCM n) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_is_onscreen(SCM osd) {
+SCM_DEFINE_PUBLIC (scm_xosd_is_onscreen,
+                   "xosd-onscreen?",
+                   1, 0, 0,
+                   (SCM osd),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-onscreen?");
     return (xosd_is_onscreen(XOSD(osd)))?SCM_BOOL_T:SCM_BOOL_F;
 }
 
-static SCM scm_xosd_wait_until_no_display(SCM osd) {
+SCM_DEFINE_PUBLIC (scm_xosd_wait_until_no_display,
+                   "xosd-wait-until-no-display",
+                   1, 0, 0,
+                   (SCM osd),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-wait-until-nodisplay");
 
     xosd_wait_until_no_display(XOSD(osd));
@@ -64,7 +79,12 @@ static SCM scm_xosd_wait_until_no_display(SCM osd) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_hide(SCM osd) {
+SCM_DEFINE_PUBLIC (scm_xosd_hide,
+                   "xosd-hide",
+                   1, 0, 0,
+                   (SCM osd),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-hide");
 
     xosd_hide(XOSD(osd));
@@ -72,7 +92,12 @@ static SCM scm_xosd_hide(SCM osd) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_show(SCM osd) {
+SCM_DEFINE_PUBLIC (scm_xosd_show,
+                   "xosd-show",
+                   1, 0, 0,
+                   (SCM osd),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-show");
 
     xosd_show(XOSD(osd));
@@ -80,7 +105,12 @@ static SCM scm_xosd_show(SCM osd) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_set_pos(SCM osd, SCM pos) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_pos,
+                   "xosd-set-pos!",
+                   2, 0, 0,
+                   (SCM osd, SCM pos),
+                   "")
+{
     int xosd_pos;
     char *pos_str;
 
@@ -102,7 +132,12 @@ static SCM scm_xosd_set_pos(SCM osd, SCM pos) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_set_align(SCM osd, SCM align) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_align,
+                   "xosd-set-align!",
+                   2, 0, 0,
+                   (SCM osd, SCM align),
+                   "")
+{
     int xosd_align;
     char *align_str;
 
@@ -124,7 +159,12 @@ static SCM scm_xosd_set_align(SCM osd, SCM align) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_set_shadow_offset(SCM osd, SCM n) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_shadow_offset,
+                   "xosd-set-shadow-offset!",
+                   2, 0, 0,
+                   (SCM osd, SCM n),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-shadow-offset!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-set-shadow-offset!");
 
@@ -133,7 +173,12 @@ static SCM scm_xosd_set_shadow_offset(SCM osd, SCM n) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_set_outline_offset(SCM osd, SCM n) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_outline_offset,
+                   "xosd-set-outline-offset!",
+                   2, 0, 0,
+                   (SCM osd, SCM n),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-outline-offset!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-set-outline-offset!");
 
@@ -142,7 +187,12 @@ static SCM scm_xosd_set_outline_offset(SCM osd, SCM n) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_set_horizontal_offset(SCM osd, SCM n) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_horizontal_offset,
+                   "xosd-set-horizontal-offset!",
+                   2, 0, 0,
+                   (SCM osd, SCM n),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-horizontal-offset!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-set-horizontal-offset!");
 
@@ -151,7 +201,12 @@ static SCM scm_xosd_set_horizontal_offset(SCM osd, SCM n) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_set_vertical_offset(SCM osd, SCM n) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_vertical_offset,
+                   "xosd-set-vertical-offset!",
+                   2, 0, 0,
+                   (SCM osd, SCM n),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-vertival-offset!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-set-vertical-offset!");
 
@@ -160,7 +215,12 @@ static SCM scm_xosd_set_vertical_offset(SCM osd, SCM n) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_set_timeout(SCM osd, SCM time) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_timeout,
+                   "xosd-set-timeout!",
+                   2, 0, 0,
+                   (SCM osd, SCM time),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-timeout!");
     SCM_ASSERT(scm_is_integer(time), time, SCM_ARG2, "xosd-set-timeout!");
 
@@ -169,7 +229,12 @@ static SCM scm_xosd_set_timeout(SCM osd, SCM time) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_scroll(SCM osd, SCM n) {
+SCM_DEFINE_PUBLIC (scm_xosd_scroll,
+                   "xosd-scroll",
+                   2, 0, 0,
+                   (SCM osd, SCM n),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-scroll");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2, "xosd-scroll");
 
@@ -178,7 +243,12 @@ static SCM scm_xosd_scroll(SCM osd, SCM n) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_set_outline_colour(SCM osd, SCM str) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_outline_colour,
+                   "xosd-set-outline-colour!",
+                   2, 0, 0,
+                   (SCM osd, SCM str),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-outline-colour!");
     SCM_ASSERT(scm_is_string(str), str, SCM_ARG2, "xosd-set-outline-coulour!");
 
@@ -187,7 +257,12 @@ static SCM scm_xosd_set_outline_colour(SCM osd, SCM str) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_set_shadow_colour(SCM osd, SCM str) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_shadow_colour,
+                   "xosd-set-shadow-colour!",
+                   2, 0, 0,
+                   (SCM osd, SCM str),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-shadow-colour!");
     SCM_ASSERT(scm_is_string(str), str, SCM_ARG2, "xosd-set-shadow-coulour!");
 
@@ -196,7 +271,12 @@ static SCM scm_xosd_set_shadow_colour(SCM osd, SCM str) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_set_colour(SCM osd, SCM str) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_colour,
+                   "xosd-set-colour!",
+                   2, 0, 0,
+                   (SCM osd, SCM str),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-colour!");
     SCM_ASSERT(scm_is_string(str), str, SCM_ARG2, "xosd-set-colour!");
 
@@ -205,7 +285,12 @@ static SCM scm_xosd_set_colour(SCM osd, SCM str) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_set_font(SCM osd, SCM str) {
+SCM_DEFINE_PUBLIC (scm_xosd_set_font,
+                   "xosd-set-font!",
+                   2, 0, 0,
+                   (SCM osd, SCM str),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-set-font!");
     SCM_ASSERT(scm_is_string(str), str, SCM_ARG2, "xosd-set-font!");
 
@@ -214,7 +299,12 @@ static SCM scm_xosd_set_font(SCM osd, SCM str) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_get_colour(SCM osd) {
+SCM_DEFINE_PUBLIC (scm_xosd_get_colour,
+                   "xosd-get-colour",
+                   1, 0, 0,
+                   (SCM osd),
+                   "")
+{
     int r,g,b;
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-get-colour");
 
@@ -225,7 +315,12 @@ static SCM scm_xosd_get_colour(SCM osd) {
                                       SCM_EOL)));
 }
 
-static SCM scm_xosd_get_number_lines(SCM osd) {
+SCM_DEFINE_PUBLIC (scm_xosd_get_number_lines,
+                   "xosd-get-number-lines",
+                   1, 0, 0,
+                   (SCM osd),
+                   "")
+{
     int lines;
 
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-get-number-lines");
@@ -233,7 +328,12 @@ static SCM scm_xosd_get_number_lines(SCM osd) {
     return scm_from_int(lines);
 }
 
-static SCM scm_xosd_display_string(SCM osd, SCM line, SCM str) {
+SCM_DEFINE_PUBLIC (scm_xosd_display_string,
+                   "xosd-display-string",
+                   3, 0, 0,
+                   (SCM osd, SCM line, SCM str),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-display-string");
     SCM_ASSERT(scm_is_integer(line), line, SCM_ARG2, "xosd-display-string");
     SCM_ASSERT(scm_is_string(str), str, SCM_ARG3, "xosd-display-string");
@@ -243,7 +343,12 @@ static SCM scm_xosd_display_string(SCM osd, SCM line, SCM str) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_display_percentage(SCM osd, SCM line, SCM per) {
+SCM_DEFINE_PUBLIC (scm_xosd_display_percentage,
+                   "xosd-display-percentage",
+                   3, 0, 0,
+                   (SCM osd, SCM line, SCM per),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-display-percentage");
     SCM_ASSERT(scm_is_integer(line), line, SCM_ARG2, "xosd-display-percentage");
     SCM_ASSERT(scm_is_integer(per), per, SCM_ARG3, "xosd-display-percentage");
@@ -253,7 +358,12 @@ static SCM scm_xosd_display_percentage(SCM osd, SCM line, SCM per) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_display_slider(SCM osd, SCM line, SCM per) {
+SCM_DEFINE_PUBLIC (scm_xosd_display_slider,
+                   "xosd-display-slider",
+                   3, 0, 0,
+                   (SCM osd, SCM line, SCM per),
+                   "")
+{
     SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag,osd), osd, SCM_ARG1, "xosd-display-slider");
     SCM_ASSERT(scm_is_integer(line), line, SCM_ARG2, "xosd-display-slider");
     SCM_ASSERT(scm_is_integer(per), per, SCM_ARG3, "xosd-display-slider");
@@ -263,7 +373,12 @@ static SCM scm_xosd_display_slider(SCM osd, SCM line, SCM per) {
     return SCM_UNSPECIFIED;
 }
 
-static SCM scm_xosd_create(SCM n) {
+SCM_DEFINE_PUBLIC (scm_xosd_create,
+                   "xosd-create",
+                   1, 0, 0,
+                   (SCM n),
+                   "")
+{
     xosd * w;
 
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG1, "xosd-create");
@@ -287,54 +402,9 @@ void init_xosd(void) {
     scm_set_smob_mark(xosd_tag,mark_xosd);
     scm_set_smob_free(xosd_tag,free_xosd);
 
-    scm_c_define_gsubr("xosd-create", 1, 0, 0, scm_xosd_create);
-    scm_c_define_gsubr("xosd-set-bar-length!", 2, 0, 0, scm_xosd_set_bar_length);
-    scm_c_define_gsubr("xosd-onscreen?", 1, 0, 0, scm_xosd_is_onscreen);
-    scm_c_define_gsubr("xosd-wait-until-no-display", 1, 0, 0, scm_xosd_wait_until_no_display);
-    scm_c_define_gsubr("xosd-hide", 1, 0, 0, scm_xosd_hide);
-    scm_c_define_gsubr("xosd-show", 1, 0, 0, scm_xosd_show);
-    scm_c_define_gsubr("xosd-set-pos!", 2, 0, 0, scm_xosd_set_pos);
-    scm_c_define_gsubr("xosd-set-align!", 2, 0, 0, scm_xosd_set_align);
-    scm_c_define_gsubr("xosd-set-shadow-offset!", 2, 0, 0, scm_xosd_set_shadow_offset);
-    scm_c_define_gsubr("xosd-set-outline-offset!", 2, 0, 0, scm_xosd_set_outline_offset);
-    scm_c_define_gsubr("xosd-set-outline-colour!", 2, 0, 0, scm_xosd_set_outline_colour);
-    scm_c_define_gsubr("xosd-set-shadow-colour!", 2, 0, 0, scm_xosd_set_shadow_colour);
-    scm_c_define_gsubr("xosd-set-horizontal-offset!", 2, 0, 0, scm_xosd_set_horizontal_offset);
-    scm_c_define_gsubr("xosd-set-vertical-offset!", 2, 0, 0, scm_xosd_set_vertical_offset);
-    scm_c_define_gsubr("xosd-set-timeout!", 2, 0, 0, scm_xosd_set_timeout);
-    scm_c_define_gsubr("xosd-set-colour!", 2, 0, 0, scm_xosd_set_colour);
-    scm_c_define_gsubr("xosd-set-font!", 2, 0, 0, scm_xosd_set_font);
-    scm_c_define_gsubr("xosd-get-colour", 1, 0, 0, scm_xosd_get_colour);
-    scm_c_define_gsubr("xosd-scroll", 2, 0, 0, scm_xosd_scroll);
-    scm_c_define_gsubr("xosd-get-number-lines", 1, 0, 0, scm_xosd_get_number_lines);
-    scm_c_define_gsubr("xosd-display-percentage", 3, 0, 0, scm_xosd_display_percentage);
-    scm_c_define_gsubr("xosd-display-slider", 3, 0, 0, scm_xosd_display_slider);
-    scm_c_define_gsubr("xosd-display-string", 3, 0, 0, scm_xosd_display_string);
-
-    scm_c_export("xosd-create",
-                 "xosd-set-bar-length!",
-                 "xosd-onscreen?",
-                 "xosd-wait-until-no-display",
-                 "xosd-hide",
-                 "xosd-show",
-                 "xosd-set-pos!",
-                 "xosd-set-align!",
-                 "xosd-set-shadow-offset!",
-                 "xosd-set-outline-offset!",
-                 "xosd-set-outline-colour!",
-                 "xosd-set-shadow-colour!",
-                 "xosd-set-horizontal-offset!",
-                 "xosd-set-vertical-offset!",
-                 "xosd-set-timeout!",
-                 "xosd-set-colour!",
-                 "xosd-set-font!",
-                 "xosd-get-colour",
-                 "xosd-scroll",
-                 "xosd-get-number-lines",
-                 "xosd-display-percentage",
-                 "xosd-display-slider",
-                 "xosd-display-string",
-                 NULL);
+#ifndef SCM_MAGIC_SNARFER
+#include "libguile-xosd.x"
+#endif
 }
 
 /* libguile-xosd.c ends here */

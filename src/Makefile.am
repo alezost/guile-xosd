@@ -23,4 +23,15 @@ libguile_xosd_la_SOURCES = libguile-xosd.c
 libguile_xosd_la_CFLAGS = $(GUILE_CFLAGS) $(LIBXOSD_CFLAGS)
 libguile_xosd_la_LIBADD = $(GUILE_LIBS) $(LIBXOSD_LIBS)
 
+C_FILES = $(libguile_xosd_la_SOURCES)
+X_FILES = $(C_FILES:%.c=%.x)
+
+SNARF_OPTS = $(libguile_xosd_la_CFLAGS)
+
+$(X_FILES): %.x: %.c
+	guile-snarf $(SNARF_OPTS) $< > $@
+
+BUILT_SOURCES = $(X_FILES)
+CLEANFILES = $(X_FILES)
+
 # Makefile.am ends here
