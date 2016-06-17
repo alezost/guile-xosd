@@ -379,6 +379,18 @@ SCM_DEFINE_PUBLIC (scm_xosd_create,
     SCM_RETURN_NEWSMOB(xosd_tag, w);
 }
 
+SCM_DEFINE_PUBLIC (scm_xosd_destroy,
+                   "xosd-destroy",
+                   1, 0, 0,
+                   (SCM osd),
+                   "")
+{
+    SCM_ASSERT(SCM_SMOB_PREDICATE(xosd_tag, osd), osd, SCM_ARG1,
+               "xosd-destroy");
+    xosd_destroy(XOSD(osd));
+    return SCM_UNSPECIFIED;
+}
+
 static SCM
 mark_xosd (SCM xosd_smob)
 {
