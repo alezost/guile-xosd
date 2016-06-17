@@ -24,8 +24,6 @@ CONFIG_GO  = $(CONFIG_SCM:%.scm=%.go)
 
 GO_FILES = $(CONFIG_GO) $(MODULES:%.scm=%.go)
 
-guilemoduledir = $(datarootdir)/guile/site/$(GUILE_EFFECTIVE_VERSION)
-guileccachedir = $(libdir)/guile/$(GUILE_EFFECTIVE_VERSION)/site-ccache
 nobase_dist_guilemodule_DATA = $(MODULES)
 nobase_nodist_guilemodule_DATA = $(CONFIG_SCM)
 nobase_nodist_guileccache_DATA = $(GO_FILES)

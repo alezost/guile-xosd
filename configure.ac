@@ -38,6 +38,24 @@ PKG_CHECK_MODULES([GUILE], [guile-2.0 >= 2.0.2])
 GUILE_PKG
 GUILE_PROGS
 
+AC_ARG_WITH([guile-site-dir],
+  [AS_HELP_STRING([--with-guile-site-dir],
+    [installation directory for Guile (*.scm) files])],
+  [guilemoduledir="$withval"],
+  [guilemoduledir="$datarootdir/guile/site/$GUILE_EFFECTIVE_VERSION"])
+AC_SUBST([guilemoduledir])
+AC_MSG_CHECKING([for the Guile module directory])
+AC_MSG_RESULT([$guilemoduledir])
+
+AC_ARG_WITH([guile-site-ccache-dir],
+  [AS_HELP_STRING([--with-guile-site-ccache-dir],
+    [installation directory for Guile compiled (*.go) files])],
+  [guileccachedir="$withval"],
+  [guileccachedir="$libdir/guile/$GUILE_EFFECTIVE_VERSION/site-ccache"])
+AC_SUBST([guileccachedir])
+AC_MSG_CHECKING([for the Guile ccache directory])
+AC_MSG_RESULT([$guileccachedir])
+
 dnl Check for libxosd.  Unfortunately, libxosd does not provide
 dnl pkgconfig file, but it has 'xosd-config' script that can be used to
 dnl define cflags and libs.
