@@ -156,7 +156,7 @@ SCM_DEFINE_PUBLIC (scm_xosd_set_shadow_offset,
                "xosd-set-shadow-offset!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2,
                "xosd-set-shadow-offset!");
-    xosd_set_timeout(XOSD(osd), scm_to_int(n));
+    xosd_set_shadow_offset(XOSD(osd), scm_to_int(n));
     return SCM_UNSPECIFIED;
 }
 
@@ -170,7 +170,7 @@ SCM_DEFINE_PUBLIC (scm_xosd_set_outline_offset,
                "xosd-set-outline-offset!");
     SCM_ASSERT(scm_is_integer(n), n, SCM_ARG2,
                "xosd-set-outline-offset!");
-    xosd_set_timeout(XOSD(osd), scm_to_int(n));
+    xosd_set_outline_offset(XOSD(osd), scm_to_int(n));
     return SCM_UNSPECIFIED;
 }
 
