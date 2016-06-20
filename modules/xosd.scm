@@ -24,10 +24,15 @@
 ;;; Code:
 
 (define-module (xosd)
+  #:use-module (ice-9 documentation)
   #:use-module (xosd config))
 
 (dynamic-call "init_xosd" (dynamic-link %library-file-name))
 
 (define-public make-xosd xosd-create)
+
+(unless (member %documentation-file-name documentation-files)
+  (set! documentation-files (cons %documentation-file-name
+                                  documentation-files)))
 
 ;;; xosd.scm ends here

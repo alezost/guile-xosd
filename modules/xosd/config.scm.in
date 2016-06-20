@@ -26,7 +26,8 @@
 (define-module (xosd config)
   #:use-module (ice-9 regex)
   #:use-module (srfi srfi-26)
-  #:export (%library-name
+  #:export (%documentation-file-name
+            %library-name
             %library-directory
             %library-file-name))
 
@@ -40,6 +41,7 @@ to find out the value of 'exec_prefix' at first, etc."
   (define config
     '(("prefix"         . "@prefix@")
       ("exec_prefix"    . "@exec_prefix@")
+      ("guilemoduledir" . "@guilemoduledir@")
       ("libdir"         . "@libdir@")))
 
   (define var-ref-regexp (make-regexp "\\$\\{([a-z_]+)\\}"))
@@ -66,5 +68,11 @@ to find out the value of 'exec_prefix' at first, etc."
 ;; File name of the library without extension.
 (define %library-file-name
   (string-append %library-directory "/" %library-name))
+
+;; File with documentation for Guile procedures.
+(define %documentation-file-name
+  (string-append (or (getenv "GUILE_XOSD_DOCDIR")
+                     (config-lookup "guilemoduledir"))
+                 "/xosd-procedures.txt"))
 
 ;;; config.scm ends here

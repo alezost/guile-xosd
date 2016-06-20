@@ -37,6 +37,9 @@ set_env () {
 
     GUILE_XOSD_LIBDIR="@abs_top_builddir@/src/.libs"
     export GUILE_XOSD_LIBDIR
+
+    GUILE_XOSD_DOCDIR="$src_modules"
+    export GUILE_XOSD_DOCDIR
 }
 
 case "$1" in

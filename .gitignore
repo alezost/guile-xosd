@@ -9,7 +9,6 @@
 *.x
 *~
 tmp
-/build-aux
 /pre-inst-env
 .deps
 .dirstamp
@@ -36,3 +35,4 @@ texinfo.tex
 /doc/stamp-vti
 /doc/version.texi
 /modules/xosd/config.scm
+/modules/xosd-procedures.txt

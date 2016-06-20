@@ -17,6 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
 
+xosd-procedures.txt:
+	$(GUILE) --no-auto-compile				\
+	  "$(top_srcdir)/build-aux/texi-to-docstrings.scm"	\
+	  "$(top_srcdir)/doc/procedures.texi"			\
+	  > $@
+
 MODULES = xosd.scm
 
 CONFIG_SCM = xosd/config.scm
@@ -25,7 +31,7 @@ CONFIG_GO  = $(CONFIG_SCM:%.scm=%.go)
 GO_FILES = $(CONFIG_GO) $(MODULES:%.scm=%.go)
 
 nobase_dist_guilemodule_DATA = $(MODULES)
-nobase_nodist_guilemodule_DATA = $(CONFIG_SCM)
+nobase_nodist_guilemodule_DATA = $(CONFIG_SCM) xosd-procedures.txt
 nobase_nodist_guileccache_DATA = $(GO_FILES)
 
 # Make sure source files are installed first, so that the mtime of
