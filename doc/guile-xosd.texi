@@ -1,0 +1,149 @@
+\input texinfo
+
+@setfilename guile-xosd.info
+@documentencoding UTF-8
+@settitle Guile-XOSD Reference Manual
+
+@include version.texi
+
+@copying
+Copyright @copyright{} 2016 Alex Kost
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled ``GNU Free
+Documentation License.''
+@end copying
+
+@dircategory The Algorithmic Language Scheme
+@direntry
+* Guile-XOSD: (guile-xosd).     Guile bindings for libxosd.
+@end direntry
+
+@titlepage
+@title Guile-XOSD Reference Manual
+@subtitle for Guile-XOSD @value{VERSION}
+@author Alex Kost
+
+@page
+@vskip 0pt plus 1filll
+
+@insertcopying
+@end titlepage
+
+@contents
+
+@c ----------------------------------------------------------------
+@node Top
+@top Guile-XOSD
+
+This document describes Guile-XOSD version @value{VERSION}, Guile
+bindings for @code{libxosd} library.
+
+@menu
+* Introduction::
+* Installation::
+* API Reference::
+* Example::
+
+Appendices
+
+* GNU Free Documentation License::  The license of this manual.
+
+@end menu
+
+@node Introduction
+@chapter Introduction
+
+Guile-XOSD provides the complete set of Guile bindings for
+@code{libxosd}, the @uref{http://sourceforge.net/projects/libxosd/,
+XOSD} library.
+
+This manual describes only the Guile procedures (@pxref{API
+Reference}).  For the documentation on the XOSD itself, see its man
+pages and the full and descriptive XOSD manual, which can be found at
+@uref{http://ldots.org/xosd-guide/xosd_guide-onepage.html}.
+
+@node Installation
+@chapter Installation
+
+Guile-XOSD depends on the following packages:
+
+@itemize
+@item @uref{http://gnu.org/software/guile/, GNU Guile}, 2.0.2 or later;
+@item @uref{http://sourceforge.net/projects/libxosd/, libxosd}, 2.2 or later.
+@end itemize
+
+The latest release of Guile-XOSD can be found at
+@uref{https://github.com/alezost/guile-xosd/releases}.  It can be
+installed with the usual sequence of commands of the GNU Build System
+(@code{./configure && make && make install}).  For more details on the
+installation process, see @file{INSTALL} file.
+
+If you want to build Guile-XOSD from a git checkout, you can do it
+with the following additional steps (before running
+@code{./configure}):
+
+@example
+$ git clone https://github.com/alezost/guile-xosd.git
+$ cd guile-xosd
+$ ./autogen.sh
+@end example
+
+@strong{Important:} Guile modules are installed under the configured
+@code{prefix}.  A typical module directory is
+@file{/usr/local/share/guile/site/2.0/}).  However, Guile does not
+search for modules in @file{/usr/local/...}, so most likely you would
+want to configure the package using @code{--with-guile-site-dir} and
+@code{--with-guile-site-ccache-dir} options, like this:
+
+@example
+$ ./configure --with-guile-site-dir=/usr/share/guile/site/2.0 \
+              --with-guile-site-ccache-dir=/usr/lib/guile/2.0/site-ccache
+@end example
+
+These are the default directories where @file{*.scm} and @file{*.go}
+files should go if Guile was installed into @code{/usr}.  Of course,
+you can specify any other directories, but make sure to add them to
+@code{GUILE_LOAD_PATH} and @code{GUILE_LOAD_COMPILED_PATH} accordingly
+(@pxref{Environment Variables,,, guile, The GNU Guile Reference
+Manual}).
+
+Alternatively, you can just install Guile-XOSD using the same prefix as was
+specified for Guile:
+
+@example
+$ ./configure --prefix=/usr
+@end example
+
+@node API Reference
+@chapter API Reference
+
+This chapter lists Guile procedures exported by the @code{(xosd)}
+module (@pxref{Modules,,, guile, The GNU Guile Reference Manual}).
+
+@strong{Note:} Color-related procedures in @code{libxosd} have
+``colour'' spelling (e.g., @code{xosd_set_colour}, not
+@code{xosd_set_color}).  Guile-XOSD inherits this spelling.
+
+@include procedures.texi
+
+@node Example
+@chapter Example
+
+Now let's look at a simple example of using Guile-XOSD.  The following
+piece of code displays ``Hello!'' OSD in the bottom left corner of
+your screen for 3 seconds.
+
+@lisp
+@include hello.scm
+@end lisp
+
+@node GNU Free Documentation License
+@appendix GNU Free Documentation License
+
+@include fdl.texi
+
+@bye

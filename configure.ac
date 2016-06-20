@@ -72,6 +72,7 @@ else
 fi
 
 AC_CONFIG_FILES([Makefile
+                 doc/Makefile
                  modules/Makefile
                  modules/xosd/config.scm
                  src/Makefile])

@@ -1,4 +1,5 @@
 *.go
+*.info
 *.la
 *.lo
 *.log
@@ -31,4 +32,7 @@ m4
 mdate-sh
 missing
 stamp-h?
+texinfo.tex
+/doc/stamp-vti
+/doc/version.texi
 /modules/xosd/config.scm

@@ -1,4 +1,4 @@
-# Makefile.am --- GNU Automake file to build Guile-XOSD
+# Makefile.am --- GNU Automake file for documentation
 
 # Copyright (C) 2016 Alex Kost <alezost@gmail.com>
 
@@ -17,11 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = doc modules src
+info_TEXINFOS = guile-xosd.texi
 
-clean-go:
-	@cd modules; make clean-go
-
-.PHONY: clean-go
+guile_xosd_TEXINFOS =				\
+  hello.scm					\
+  fdl.texi					\
+  procedures.texi
 
 # Makefile.am ends here
