@@ -141,6 +141,9 @@ your screen for 3 seconds.
 @include hello.scm
 @end lisp
 
+You can find other examples in the
+@file{<prefix>/share/guile-xosd/examples} directory.
+
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
 

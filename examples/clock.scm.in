@@ -1,0 +1,49 @@
+#!@GUILE@
+!#
+;;; clock.scm --- Display clock OSD
+
+;; Copyright © 2016 Alex Kost <alezost@gmail.com>
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; This script displays clock (i.e., the current time updated every
+;; second) in the center of your screen.
+
+;;; Code:
+
+(use-modules (xosd))
+
+(define (setup-clock osd)
+  "Set up the OSD object to display the clock."
+  (xosd-set-pos! osd 'middle)
+  (xosd-set-align! osd 'center)
+  (xosd-set-font! osd "-*-dejavu sans-bold-r-normal-*-*-600-*-*-p-*-*-1")
+  (xosd-set-colour! osd "LimeGreen")
+  (xosd-set-shadow-offset! osd 3))
+
+(define (display-clock osd)
+  "Display the current time in the OSD object.
+This procedure never exits."
+  (xosd-display-string osd 0 (strftime "%T" (localtime (current-time))))
+  (sleep 1)
+  (display-clock osd))
+
+(when (batch-mode?)
+  (let ((osd (xosd-create 1)))
+    (setup-clock osd)
+    (display-clock osd)))
+
+;;; clock.scm ends here

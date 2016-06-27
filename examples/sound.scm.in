@@ -1,0 +1,138 @@
+#!@GUILE@
+!#
+;;; sound.scm --- Display OSD with sound volume
+
+;; Copyright © 2016 Alex Kost <alezost@gmail.com>
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; This is a simple example showing how Guile-XOSD can be used to
+;; display sound volume by getting info from 'amixer' output.
+;;
+;; This script passes all its arguments to 'amixer' and parses its
+;; output by searching a line like this:
+;;
+;;   ... Playback 39118 [60%] [on]
+;;
+;; or this:
+;;
+;;   ... Playback 32 [50%] [-32.00dB] [off]
+;;
+;; Examples of using:
+;;
+;;   sound.scm sget Master
+;;   sound.scm sset Master toggle
+;;   sound.scm sset Master 40%
+;;
+;; See 'man amixer' for more info.  Note: 'amixer' is a program from
+;; 'alsa-utils' package (or whatever it is called by your distribution):
+;; <http://www.alsa-project.org/>.
+
+;; Actually, this is not a real world example.  It has 2 downsides:
+;;
+;; 1. At first, well, it's not a compiled C program, it's just a Guile
+;; script, so it is not super-fast :-)
+;;
+;; 2. This script exits only after the sound OSD disappears (the timeout
+;; is set to 3 seconds), so, for example, if you bind "sound.scm sset
+;; Master 3%+" to some key in your window manager, you'll not be very
+;; happy if you quickly press this key several times: the sound will be
+;; increased properly (by 3% each time) but you'll see several OSDs
+;; laying on each other, as another "sound.scm" script will be called
+;; when the previous one(s) is(are) still alive.
+;;
+;; In practice I use the following solution, that allows me to overcome
+;; both downsides: ... (TODO publish guile-daemon and mention it here).
+;; As you can see, I'm still using guile to set the sound and to display
+;; OSD, but it is *very fast* and it's the same OSD object every time!
+
+;;; Code:
+
+(use-modules
+ (ice-9 format)
+ (ice-9 match)
+ (ice-9 popen)
+ (ice-9 rdelim)
+ (ice-9 regex)
+ (srfi srfi-11)
+ (xosd))
+
+(define %color-muted "#E74F35")
+(define %color-unmuted "#23B13E")
+(define %color-error "orange")
+
+(define (setup-osd osd)
+  (xosd-set-timeout! osd 3)
+  (xosd-set-pos! osd 'bottom)
+  (xosd-set-align! osd 'center)
+  (xosd-set-font! osd "-*-dejavu sans-bold-r-normal-*-*-300-*-*-p-*-*-1")
+  (xosd-set-shadow-offset! osd 2))
+
+(define* (display-sound osd #:key volume mute?)
+  (xosd-set-colour! osd (if mute? %color-muted %color-unmuted))
+  (xosd-display-string osd 0 (format #f "Volume: ~d%" volume))
+  (xosd-display-percentage osd 1 volume))
+
+(define (display-error osd)
+  (xosd-set-colour! osd %color-error)
+  (xosd-display-string osd 0 "")
+  (xosd-display-string osd 1 "Oops, can't parse amixer output :-)"))
+
+(define (call-amixer . args)
+  "Call 'amixer' with ARGS and return its output."
+  (let* ((port (apply open-pipe* OPEN_READ "amixer" args))
+         (out (read-string port)))
+    (close-pipe port)
+    out))
+
+(define (parse-amixer-output output)
+  "Parse 'amixer' OUTPUT and return 2 values: sound volume (a number
+from 0 to 100) and a boolean value showing if the sound is
+muted/unmuted.  Volume is #f if OUTPUT cannot be parsed."
+  (let* ((rx (make-regexp
+              "Playback [0-9]+ \\[([0-9]+)%\\].* \\[(on|off)\\]"))
+         (res (regexp-exec rx output)))
+    (if res
+        (values (string->number (match:substring res 1))
+                (string=? "off" (match:substring res 2)))
+        (values #f #f))))
+
+(define (show-help)
+  (format #t "Usage: ~a AMIXER-ARGS ...
+Run 'amixer AMIXER-ARGS ...', parse its output, and display OSD with the
+current sound volume.\n"
+          (car (command-line))))
+
+(define (main args)
+  (match (cdr args)
+    (((or "-h" "--help" "help") _ ...)
+     (show-help))
+    ((amixer-args ...)
+     (let-values (((volume mute?)
+                   (parse-amixer-output
+                    (apply call-amixer amixer-args))))
+       (let ((osd (xosd-create 2)))
+         (setup-osd osd)
+         (if volume
+             (display-sound osd #:volume volume #:mute? mute?)
+             (display-error osd))
+         (xosd-wait-until-no-display osd))))
+    (_ (show-help))))
+
+(when (batch-mode?)
+  (main (command-line)))
+
+;;; sound.scm ends here

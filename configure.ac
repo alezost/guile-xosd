@@ -73,6 +73,8 @@ fi
 
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
+                 examples/clock.scm
+                 examples/sound.scm
                  modules/Makefile
                  modules/xosd/config.scm
                  src/Makefile])

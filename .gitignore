@@ -34,5 +34,6 @@ stamp-h?
 texinfo.tex
 /doc/stamp-vti
 /doc/version.texi
+/examples/*.scm
 /modules/xosd/config.scm
 /modules/xosd-procedures.txt
