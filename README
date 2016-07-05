@@ -1,26 +1,74 @@
-(osd) enables you to use the libxosd project in you guile applications
+-*- mode: org -*-
 
-For details on how to use xosd, please refer to xosd documentation, the functions are translated as is in guile.
-Exceptions:
-- the xosd_display function is splitted in 3 guile functions:
-  * xosd-display-percentage
-  * xosd-display-string
-  * xosd-display-slider
-- the xosd_get_colour returns a list instead of having out parameters
+* About
 
-Note that constants XOSD_top, XOSD_center, etc. have been replaced by symbols
+Guile-XOSD provides the Guile bindings for [[http://sourceforge.net/projects/libxosd/][libxosd]] library.
 
-the xosd-display-printf was dropped because:
-- it is probably hard to implement (I don't know how to wrap a variable arguments function)
-- it is useless since you can do the (format) in scheme and then call xosd-display-string
+Guile-XOSD is the reincarnation of [[https://github.com/sigma/lisposd][lisposd]].  The C file with the Guile
+bindings was written at the time (2004-2005) by Yann Hodique, and the
+rest (GNU Build System infrastructure, guile modules, documentation and
+examples) was added as a part of Guile-XOSD in 2016 by Alex Kost.
 
-The name of the module is "xosdguile". You have to put it somewhere in your %load-path
+* Usage
 
-An example of how you can use it:
+From the following screenshots you can get the idea how Guile-XOSD may
+be used:
 
-(use-modules (xosdguile))
-(define osd (make-xosd 2))
-(xosd-set-timeout! osd 5)
+- [[http://i.imgur.com/vNbFrDm.png]]
+- [[http://i.imgur.com/XCn4ysP.png]]
+
+And here is the code to display the OSD from the second screenshot:
+
+#+BEGIN_SRC scheme
+(use-modules (xosd))
+
+(define osd (xosd-create 2))
+
 (xosd-set-pos! osd 'top)
 (xosd-set-align! osd 'center)
-(xosd-display-string osd 0 "Plopor !")
+(xosd-set-font! osd "-*-ubuntu-bold-r-normal--*-500-*-*-p-*-*-1")
+(xosd-set-colour! osd "dark green")
+(xosd-set-outline-offset! osd 1)
+(xosd-set-outline-colour! osd "white")
+
+(define (display-percentage percent)
+  (xosd-display-string osd 0 (format #f "~a%" percent))
+  (xosd-display-percentage osd 1 percent))
+
+(display-percentage 73)
+#+END_SRC
+
+The full documentation (texinfo manual) and a couple of other examples
+can be found in the source tree (and in the installed package).
+
+* Building from Git
+
+Along with the obvious requirements for Guile-XOSD:
+
+- [[http://gnu.org/software/guile/][GNU Guile]]
+- [[http://sourceforge.net/projects/libxosd/][XOSD]] library
+
+to build it from git, you also need:
+
+- [[http://gnu.org/software/autoconf/][GNU Autoconf]]
+- [[http://gnu.org/software/automake/][GNU Automake]]
+- [[http://gnu.org/software/help2man/][GNU Help2man]]
+
+Run =./autogen.sh= to generate the build system infrastructure.  After
+that, the program can be built and installed with the usual sequence of
+commands of the GNU Build System:
+
+#+BEGIN_SRC sh
+$ ./configure
+$ make
+# make install
+#+END_SRC
+
+It is possible to use/test Guile-XOSD without installing (i.e., after
+running =make= but before running =make install=) with the help of
+=pre-inst-env= script in the top build tree, like this:
+
+#+BEGIN_SRC sh
+$ ./pre-inst-env guile
+scheme@(guile-user)> ,use(xosd)
+#+END_SRC
