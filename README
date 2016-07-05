@@ -72,3 +72,9 @@ running =make= but before running =make install=) with the help of
 $ ./pre-inst-env guile
 scheme@(guile-user)> ,use(xosd)
 #+END_SRC
+
+* Building with Guix
+
+This repository contains =guix.scm= file which can be used to build or
+install the development version of Guile-XOSD with [[http://www.gnu.org/software/guix/][GNU Guix]] (this file
+also contains the package for the latest release).
