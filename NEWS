@@ -1,5 +1,9 @@
 -*- mode: org -*-
 
+* Changes in 0.2 (since 0.1)
+
+** "pre-inst-env.el" added
+
 * Initial release 0.1 (changes comparing with 'lisposd')
 
 ** C file with guile bindings cleaned up to avoid compilation warnings

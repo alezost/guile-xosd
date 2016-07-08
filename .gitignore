@@ -10,6 +10,7 @@
 *~
 tmp
 /pre-inst-env
+/pre-inst-env.el
 .deps
 .dirstamp
 .libs

@@ -77,7 +77,8 @@ AC_CONFIG_FILES([Makefile
                  examples/sound.scm
                  modules/Makefile
                  modules/xosd/config.scm
-                 src/Makefile])
+                 src/Makefile
+                 pre-inst-env.el])
 AC_CONFIG_FILES([pre-inst-env], [chmod +x pre-inst-env])
 
 AC_OUTPUT

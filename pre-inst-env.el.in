@@ -1,0 +1,44 @@
+;;; pre-inst-env.el --- Pre-installation environment for Guile-XOSD
+
+;; Copyright (C) 2016 Alex Kost <alezost@gmail.com>
+
+;; This file is part of Guile-XOSD.
+
+;; Guile-XOSD is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; Guile-XOSD is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; This file can be used to set up environment variables for Guile-XOSD
+;; inside Emacs.  Shell "pre-inst-env" script may be useful, but I
+;; prefer to work with Guile using Geiser.  So I just evaluate the
+;; contents of this file (M-x eval-buffer) and that's it!: when I do
+;; "M-x run-guile", I can ",use(xosd)" there and work with it.
+
+;;; Code:
+
+(let ((src-modules   (expand-file-name "modules" "@abs_top_srcdir@"))
+      (build-modules (expand-file-name "modules" "@abs_top_builddir@")))
+  (setenv "GUILE_LOAD_COMPILED_PATH"
+          (concat build-modules ":" (getenv "GUILE_LOAD_COMPILED_PATH")))
+  (setenv "GUILE_LOAD_PATH"
+          (let ((base (concat build-modules ":"
+                              (getenv "GUILE_LOAD_PATH"))))
+            (if (string= src-modules build-modules)
+                base
+              (concat src-modules ":" base))))
+  (setenv "GUILE_XOSD_LIBDIR" (expand-file-name "src/.libs"
+                                                "@abs_top_builddir@"))
+  (setenv "GUILE_XOSD_DOCDIR" src-modules))
+
+;;; pre-inst-env.el ends here
