@@ -17,7 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = doc modules src
+# Keep "modules" after "src" because Guile modules should be compiled
+# after "libguile-xosd".
+SUBDIRS = doc src modules
 
 EXTRA_DIST = build-aux/texi-to-docstrings.scm
 
