@@ -22,7 +22,9 @@ xosd-procedures.txt: $(top_srcdir)/doc/procedures.texi
 	  "$(top_srcdir)/build-aux/texi-to-docstrings.scm"	\
 	  "$<" > $@
 
-MODULES = xosd.scm
+MODULES =					\
+  xosd.scm					\
+  xosd/aliases.scm
 
 CONFIG_SCM = xosd/config.scm
 CONFIG_GO  = $(CONFIG_SCM:%.scm=%.go)
