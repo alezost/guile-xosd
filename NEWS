@@ -1,0 +1,36 @@
+-*- mode: org -*-
+
+* Initial release 0.1 (changes comparing with 'lisposd')
+
+** C file with guile bindings cleaned up to avoid compilation warnings
+
+The code was adjusted to remove many deprecated macros (SCM_INUM,
+SCM_STRINGP, etc.).
+
+** The GNU Build System infrastructure added
+
+The hand-written Makefile was replaced with "configure.ac" and
+"Makefile.am" files.
+
+** .scm files added
+
+Instead of defining module in a .c file, the real Guile files were
+added: (xosd) and (xosd config) modules.
+
+** Bug in setting shadow/outline offset fixed
+
+See commit a02d2040761bbd529219fe5a0e2ff92c465450ab.
+
+** Missing procedures added
+
+`make-xosd' was renamed to `xosd-create'; `xosd-destroy` was added.
+
+** Documentation added
+
+Both texinfo manual and docstrings for the Guile procedures were added.
+
+** Examples added
+
+The resulting package includes "clock.scm" and "volume.scm" files.
+
+** "pre-inst-env" script added
