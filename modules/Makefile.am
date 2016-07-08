@@ -17,11 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
 
-xosd-procedures.txt:
+xosd-procedures.txt: $(top_srcdir)/doc/procedures.texi
 	$(GUILE) --no-auto-compile				\
 	  "$(top_srcdir)/build-aux/texi-to-docstrings.scm"	\
-	  "$(top_srcdir)/doc/procedures.texi"			\
-	  > $@
+	  "$<" > $@
 
 MODULES = xosd.scm
 
