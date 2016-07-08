@@ -378,6 +378,12 @@ SCM_DEFINE_PUBLIC (scm_xosd_create,
     } else {
         SCM_ASSERT(scm_is_integer(n), n, SCM_ARG1, "xosd-create");
         lines = scm_to_int(n);
+        if (lines < 1)
+            scm_error(scm_from_utf8_symbol("xosd-error"),
+                      NULL,
+                      "The number of OSD lines should be more than 0",
+                      SCM_BOOL_F,
+                      SCM_BOOL_F);
     }
     SCM_RETURN_NEWSMOB(xosd_tag, xosd_create(lines));
 }
