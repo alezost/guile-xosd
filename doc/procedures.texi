@@ -1,7 +1,7 @@
-@deffn {Scheme Procedure} xosd-create number-of-lines
-Create and return a new osd object with the specified maximum
-@var{number-of-lines} that this object can display (this value cannot
-be changed).
+@deffn {Scheme Procedure} xosd-create [number-of-lines]
+Create and return a new OSD object with the specified maximum
+@var{number-of-lines} (1 by default) that this object can display
+(this value cannot be changed).
 @end deffn
 
 @deffn {Scheme Procedure} xosd-destroy osd

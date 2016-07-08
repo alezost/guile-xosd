@@ -368,15 +368,18 @@ SCM_DEFINE_PUBLIC (scm_xosd_display_slider,
 
 SCM_DEFINE_PUBLIC (scm_xosd_create,
                    "xosd-create",
-                   1, 0, 0,
+                   0, 1, 0,
                    (SCM n),
                    "")
 {
-    xosd *w;
-    SCM_ASSERT(scm_is_integer(n), n, SCM_ARG1,
-               "xosd-create");
-    w = xosd_create(scm_to_int(n));
-    SCM_RETURN_NEWSMOB(xosd_tag, w);
+    int lines;
+    if (SCM_UNBNDP(n)) {
+        lines = 1;
+    } else {
+        SCM_ASSERT(scm_is_integer(n), n, SCM_ARG1, "xosd-create");
+        lines = scm_to_int(n);
+    }
+    SCM_RETURN_NEWSMOB(xosd_tag, xosd_create(lines));
 }
 
 SCM_DEFINE_PUBLIC (scm_xosd_destroy,

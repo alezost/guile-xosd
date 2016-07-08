@@ -2,6 +2,8 @@
 
 * Changes in 0.2 (since 0.1)
 
+** `xosd-create' argument is optional (defaults to 1)
+
 ** "pre-inst-env.el" added
 
 * Initial release 0.1 (changes comparing with 'lisposd')
