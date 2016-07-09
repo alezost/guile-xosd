@@ -122,14 +122,81 @@ $ ./configure --prefix=/usr
 @node API Reference
 @chapter API Reference
 
-This chapter lists Guile procedures exported by the @code{(xosd)}
-module (@pxref{Modules,,, guile, The GNU Guile Reference Manual}).
+This chapter describes the Guile procedures provided by the
+Guile-XOSD.  @code{xosd} module provides procedures that have names
+very similar to the names of @code{libxosd} C procedures, while
+@code{(xosd aliases)} module exports procedures with the more
+``Schemey'' names.
 
-@strong{Note:} Color-related procedures in @code{libxosd} have
-``colour'' spelling (e.g., @code{xosd_set_colour}, not
-@code{xosd_set_color}).  Guile-XOSD inherits this spelling.
+@menu
+* Straight procedures::		@code{(xosd)} module
+* Aliases::			@code{(xosd aliases)} module
+@end menu
+
+@node Straight procedures
+@section Straight procedures
+
+This section lists Guile procedures exported by the @code{(xosd)}
+module.  These procedures have almost the same names as the original C
+procedures provided by the @code{libxosd} library.  Of course the
+names are modified to become the regular Scheme names: @code{_} is
+replaced by @code{-}, and there are @code{?} and @code{!} where
+appropriate, but the rest left unchanged.
+
+For example, all procedures have @code{xosd-} prefix.  Also
+color-related procedures in @code{libxosd} have ``colour'' spelling
+(e.g., @code{xosd_set_colour}, not @code{xosd_set_color}).  Procedures
+from @code{(xosd)} module inherit this spelling.
 
 @include procedures.texi
+
+@node Aliases
+@section Aliases
+
+@code{(xosd aliases)} module provides other names for all the
+procedures described in the previous section.  These names are
+intended to be more ``Schemey'' and more clear.
+
+The main rules for these names are:
+
+@itemize @bullet
+@item
+@code{xosd} part is replaced with @code{osd} and for the most
+procedures (if not documented below) it is moved from the first place
+of a name to the second one.  For example, @code{show-osd} is an alias
+for @code{xosd-show}, @code{set-osd-font!}  is an alias for
+@code{xosd-set-font!}.
+
+@item
+@code{colour} part is replaced with @code{color}.
+@end itemize
+
+Above these rules, the following aliases exist:
+
+@table @code
+@item make-osd
+Alias for @code{xosd-create}.
+@item kill-osd
+Alias for @code{xosd-destroy}.
+@item display-string-in-osd
+Alias for @code{xosd-display-string}.
+@item display-percentage-in-osd
+Alias for @code{xosd-display-percentage}.
+@item display-slider-in-osd
+Alias for @code{xosd-display-slider}.
+@item osd-color
+Alias for @code{xosd-get-colour}.
+@item osd-number-of-lines
+Alias for @code{xosd-get-number-lines}.
+@item set-osd-position!
+Alias for @code{xosd-set-pos!}.
+@item osd-on-screen?
+@itemx osd-displayed?
+Aliases for @code{xosd-onscreen?}.
+@item wait-while-osd-on-screen
+@itemx wait-while-osd-displayed
+Aliases for @code{xosd-wait-until-no-display}.
+@end table
 
 @node Example
 @chapter Example
@@ -142,7 +209,8 @@ your screen for 3 seconds.
 @include hello.scm
 @end lisp
 
-You can find other examples in the
+You can find other examples of using both @code{(xosd)} and
+@code{(xosd aliases)} modules in the
 @file{<prefix>/share/guile-xosd/examples} directory.
 
 @node Hacking
