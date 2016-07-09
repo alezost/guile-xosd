@@ -47,6 +47,7 @@ bindings for @code{libxosd} library.
 * Installation::
 * API Reference::
 * Example::
+* Hacking::
 
 Appendices
 
@@ -143,6 +144,52 @@ your screen for 3 seconds.
 
 You can find other examples in the
 @file{<prefix>/share/guile-xosd/examples} directory.
+
+@node Hacking
+@chapter Hacking
+
+It is possible to use Guile-XOSD without installation (after running
+@code{./configure} and @code{make} but without @code{make install}).
+All is needed is setting the following environment variables:
+
+@table @code
+@item GUILE_LOAD_PATH
+@itemx GUILE_LOAD_COMPILED_PATH
+@xref{Environment Variables,,, guile, GNU Guile Reference Manual}.
+
+@item GUILE_XOSD_LIBDIR
+Directory where @file{libguile-xosd} library is placed after
+compilation.  Usually it is @file{<builddir>/src/.libs}.
+
+@item GUILE_XOSD_DOCDIR
+Directory where @file{xosd-procedures.txt} (the file with docstrings
+for Guile procedures) is placed.  Usually it is
+@file{<srcdir>/modules}.
+@end table
+
+Setting them manually is not needed as Guile-XOSD provides
+@file{pre-inst-env} and @file{pre-inst-env.el} files for this purpose.
+
+@itemize @bullet
+@item
+@file{pre-inst-env} is a shell script that sets the required
+environment variables, and runs the specified command.  A typical use
+is:
+
+@example
+$ ./pre-inst-env guile
+scheme@@(guile-user)> ,use(xosd)
+...
+@end example
+
+@item
+If you live in Emacs, you may find @file{pre-inst-env.el} more useful.
+If you load this file (for example, with @kbd{M-x load-file}), it will
+set the environment inside Emacs, so you can run Guile in @kbd{M-x
+shell}, or more importantly start Geiser and use Guile-XOSD modules
+there.
+
+@end itemize
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
