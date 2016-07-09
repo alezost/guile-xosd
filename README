@@ -52,7 +52,8 @@ to build it from git, you also need:
 
 - [[http://gnu.org/software/autoconf/][GNU Autoconf]]
 - [[http://gnu.org/software/automake/][GNU Automake]]
-- [[http://gnu.org/software/help2man/][GNU Help2man]]
+- [[http://gnu.org/software/libtool/][GNU Libtool]]
+- [[http://gnu.org/software/texinfo/][GNU Texinfo]]
 
 Run =./autogen.sh= to generate the build system infrastructure.  After
 that, the program can be built and installed with the usual sequence of
