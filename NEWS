@@ -4,6 +4,10 @@
 
 ** (xosd aliases) module added
 
+** New example added
+
+"message.scm" example uses (xosd aliases) module.
+
 ** `xosd-create' argument is optional (defaults to 1)
 
 ** "pre-inst-env.el" added

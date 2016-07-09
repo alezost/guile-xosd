@@ -73,6 +73,7 @@ fi
 
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
+                 examples/message.scm
                  examples/clock.scm
                  examples/sound.scm
                  modules/Makefile

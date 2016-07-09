@@ -1,0 +1,66 @@
+#!@GUILE@
+!#
+;;; message.scm --- Display a message in OSD
+
+;; Copyright © 2016 Alex Kost <alezost@gmail.com>
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; This script displays an OSD in a fancy manner.
+
+;;; Code:
+
+(use-modules (xosd aliases))
+
+(define (setup-osd osd)
+  (set-osd-position! osd 'middle)
+  (set-osd-align! osd 'center)
+  (set-osd-font! osd "-*-dejavu sans-bold-r-normal-*-*-300-*-*-p-*-*-1")
+  (set-osd-color! osd "yellow")
+  (set-osd-outline-color! osd "red")
+  (set-osd-outline-offset! osd 1))
+
+(define* (display-by-chars string osd #:key (timeout 200000))
+  "Display STRING in the OSD object by characters.
+Sleep for TIMEOUT (microseconds) after each character."
+  (let ((number-of-chars (string-length string)))
+    (let loop ((char-number 1))
+      (when (<= char-number number-of-chars)
+        (display-string-in-osd osd 0 (substring string 0 char-number))
+        (usleep timeout)
+        (loop (1+ char-number))))))
+
+(define* (shake-osd osd #:key (timeout 50000) (shift 10))
+  "Shake the OSD object a bit."
+  (let loop ((shift shift))
+    (when (> shift 0)
+      (set-osd-vertical-offset! osd shift)
+      (usleep timeout)
+      (set-osd-horizontal-offset! osd (- shift))
+      (usleep timeout)
+      (set-osd-vertical-offset! osd (- shift))
+      (usleep timeout)
+      (set-osd-horizontal-offset! osd shift)
+      (usleep timeout)
+      (loop (1- shift)))))
+
+(when (batch-mode?)
+  (let ((osd (make-osd)))
+    (setup-osd osd)
+    (display-by-chars "Guile-XOSD is great!!" osd)
+    (shake-osd osd)))
+
+;;; message.scm ends here
