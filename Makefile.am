@@ -22,9 +22,7 @@ SUBDIRS = doc modules src
 EXTRA_DIST = build-aux/texi-to-docstrings.scm
 
 examplesdir = $(pkgdatadir)/examples
-nodist_examples_SCRIPTS =			\
-  examples/clock.scm				\
-  examples/sound.scm
+nodist_examples_SCRIPTS = examples/*.scm
 
 clean-go:
 	@cd modules; make clean-go
