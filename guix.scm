@@ -75,7 +75,7 @@ Screen Display\" library.")
 
 (define guile-xosd-devel
   (let ((revision "1")
-        (commit "655af4024e637e5eb4317395afbdfae948ecf842"))
+        (commit "e7345d03b409e5b0d4a9868a46db2fed0521dbc4"))
     (package
       (inherit guile-xosd)
       (version (string-append (package-version guile-xosd)
@@ -90,7 +90,7 @@ Screen Display\" library.")
                                           "-" version "-checkout"))
                 (sha256
                  (base32
-                  "05s7glf65l38lwcl13vas5vml9xlpsx0g963jkg2byqcyjmk7y1l"))))
+                  "0rn00icq85nbcvvgmqclf9l656srczkhzj83c527lcj6b28iprvp"))))
       (arguments
        '(#:phases
          (modify-phases %standard-phases
