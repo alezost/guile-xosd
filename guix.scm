@@ -39,7 +39,6 @@
  (guix build-system gnu)
  (gnu packages autotools)
  (gnu packages guile)
- (gnu packages man)
  (gnu packages pkg-config)
  (gnu packages texinfo)
  (gnu packages xdisorg)
