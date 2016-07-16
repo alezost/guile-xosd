@@ -25,9 +25,9 @@
 ;;; Code:
 
 (define-module (xosd)
-  #:use-module (xosd bindings))
+  #:use-module (xosd bindings)
+  #:export (make-osd))
 
-(define-public make-osd xosd-create)
 (define-public kill-osd xosd-destroy)
 (define-public show-osd xosd-show)
 (define-public hide-osd xosd-hide)
@@ -53,5 +53,40 @@
 (define-public set-osd-shadow-color! xosd-set-shadow-colour!)
 (define-public wait-while-osd-displayed xosd-wait-until-no-display)
 (define-public wait-while-osd-on-screen xosd-wait-until-no-display)
+
+(define* (make-osd #:key (lines 1) align position
+                   bar-length timeout color font
+                   horizontal-offset vertical-offset
+                   outline-offset shadow-offset
+                   outline-color shadow-color)
+  "Create and return a new OSD object with the specified parameters.
+LINES is the number of lines that the OSD object can display.
+See 'set-osd-...' procedures for the meaning of the other arguments."
+  (let ((osd (xosd-create lines)))
+    (when align
+      (set-osd-align! osd align))
+    (when position
+      (set-osd-position! osd position))
+    (when bar-length
+      (set-osd-bar-length! osd bar-length))
+    (when timeout
+      (set-osd-timeout! osd timeout))
+    (when color
+      (set-osd-color! osd color))
+    (when font
+      (set-osd-font! osd font))
+    (when horizontal-offset
+      (set-osd-horizontal-offset! osd horizontal-offset))
+    (when vertical-offset
+      (set-osd-vertical-offset! osd vertical-offset))
+    (when outline-offset
+      (set-osd-outline-offset! osd outline-offset))
+    (when shadow-offset
+      (set-osd-shadow-offset! osd shadow-offset))
+    (when outline-color
+      (set-osd-outline-color! osd outline-color))
+    (when shadow-color
+      (set-osd-shadow-color! osd shadow-color))
+    osd))
 
 ;;; xosd.scm ends here

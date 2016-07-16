@@ -153,18 +153,18 @@ from @code{(xosd bindings)} module inherit this spelling.
 @node Aliases and wrappers
 @section Aliases and wrappers
 
-@code{(xosd)} module provides other names for all the procedures
-described in the previous section.  These names are intended to be
-more ``Schemey'' and more clear.
+@code{(xosd)} module provides some wrappers and aliases for all the
+procedures described in the previous section.  These procedures are
+intended to be more ``Schemey'' and more clear.
 
-The main rules for these names are:
+The main rules for the names of aliases are:
 
 @itemize @bullet
 @item
 @code{xosd} part is replaced with @code{osd} and for the most
 procedures (if not documented below) it is moved from the first place
 of a name to the second one.  For example, @code{show-osd} is an alias
-for @code{xosd-show}, @code{set-osd-font!}  is an alias for
+for @code{xosd-show}, @code{set-osd-font!} is an alias for
 @code{xosd-set-font!}.
 
 @item
@@ -174,8 +174,6 @@ for @code{xosd-show}, @code{set-osd-font!}  is an alias for
 Above these rules, the following aliases exist:
 
 @table @code
-@item make-osd
-Alias for @code{xosd-create}.
 @item kill-osd
 Alias for @code{xosd-destroy}.
 @item display-string-in-osd
@@ -197,6 +195,17 @@ Aliases for @code{xosd-onscreen?}.
 @itemx wait-while-osd-displayed
 Aliases for @code{xosd-wait-until-no-display}.
 @end table
+
+Also the following procedures are available:
+
+@deffn {Scheme Procedure} make-osd [#:lines 1] [#:align] [#:position] @
+       [#:bar-length] [#:timeout] [#:color] [#:font] @
+       [#:horizontal-offset] [#:vertical-offset] [#:outline-offset] @
+       [#:shadow-offset] [#:outline-color] [#:shadow-color]
+Create and return a new OSD object with the specified parameters.
+This procedure calls @code{(xosd-create lines)} and then
+@code{set-osd-@dots{}!} for the other specified keywords.
+@end deffn
 
 @node Example
 @chapter Example
