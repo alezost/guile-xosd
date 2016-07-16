@@ -27,6 +27,7 @@
 (define-module (xosd)
   #:use-module (xosd bindings)
   #:export (make-osd
+            toggle-osd
             display-string-in-osd
             display-percentage-in-osd
             display-slider-in-osd))
@@ -106,5 +107,11 @@ See 'xosd-display-percentage' for details."
   "Display slider PERCENTAGE in OSD.
 See 'xosd-display-slider' for details."
   (xosd-display-slider osd line-number percentage))
+
+(define (toggle-osd osd)
+  "Hide/show OSD."
+  (if (osd-displayed? osd)
+      (hide-osd osd)
+      (show-osd osd)))
 
 ;;; xosd.scm ends here

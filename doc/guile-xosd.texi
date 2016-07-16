@@ -201,6 +201,10 @@ This procedure calls @code{(xosd-create lines)} and then
 @code{set-osd-@dots{}!} for the other specified keywords.
 @end deffn
 
+@deffn {Scheme Procedure} toggle-osd osd
+Hide or show @var{osd}.
+@end deffn
+
 @deffn {Scheme Procedure} display-string-in-osd osd string @
        [line-number 0]
 Display @var{string} in the @var{line-number} of @var{osd}.
