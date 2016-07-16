@@ -39,7 +39,7 @@ Sleep for TIMEOUT (microseconds) after each character."
   (let ((number-of-chars (string-length string)))
     (let loop ((char-number 1))
       (when (<= char-number number-of-chars)
-        (display-string-in-osd osd 0 (substring string 0 char-number))
+        (display-string-in-osd osd (substring string 0 char-number))
         (usleep timeout)
         (loop (1+ char-number))))))
 

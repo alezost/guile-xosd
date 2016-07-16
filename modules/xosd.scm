@@ -26,15 +26,15 @@
 
 (define-module (xosd)
   #:use-module (xosd bindings)
-  #:export (make-osd))
+  #:export (make-osd
+            display-string-in-osd
+            display-percentage-in-osd
+            display-slider-in-osd))
 
 (define-public kill-osd xosd-destroy)
 (define-public show-osd xosd-show)
 (define-public hide-osd xosd-hide)
 (define-public scroll-osd xosd-scroll)
-(define-public display-string-in-osd xosd-display-string)
-(define-public display-percentage-in-osd xosd-display-percentage)
-(define-public display-slider-in-osd xosd-display-slider)
 (define-public osd-color xosd-get-colour)
 (define-public osd-number-of-lines xosd-get-number-lines)
 (define-public osd-on-screen? xosd-onscreen?)
@@ -88,5 +88,23 @@ See 'set-osd-...' procedures for the meaning of the other arguments."
     (when shadow-color
       (set-osd-shadow-color! osd shadow-color))
     osd))
+
+(define* (display-string-in-osd osd string
+                                #:optional (line-number 0))
+  "Display STRING in OSD.
+See 'xosd-display-string' for details."
+  (xosd-display-string osd line-number string))
+
+(define* (display-percentage-in-osd osd percentage
+                                    #:optional (line-number 0))
+  "Display PERCENTAGE in OSD.
+See 'xosd-display-percentage' for details."
+  (xosd-display-percentage osd line-number percentage))
+
+(define* (display-slider-in-osd osd percentage
+                                #:optional (line-number 0))
+  "Display slider PERCENTAGE in OSD.
+See 'xosd-display-slider' for details."
+  (xosd-display-slider osd line-number percentage))
 
 ;;; xosd.scm ends here

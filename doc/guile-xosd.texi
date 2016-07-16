@@ -176,12 +176,6 @@ Above these rules, the following aliases exist:
 @table @code
 @item kill-osd
 Alias for @code{xosd-destroy}.
-@item display-string-in-osd
-Alias for @code{xosd-display-string}.
-@item display-percentage-in-osd
-Alias for @code{xosd-display-percentage}.
-@item display-slider-in-osd
-Alias for @code{xosd-display-slider}.
 @item osd-color
 Alias for @code{xosd-get-colour}.
 @item osd-number-of-lines
@@ -205,6 +199,24 @@ Also the following procedures are available:
 Create and return a new OSD object with the specified parameters.
 This procedure calls @code{(xosd-create lines)} and then
 @code{set-osd-@dots{}!} for the other specified keywords.
+@end deffn
+
+@deffn {Scheme Procedure} display-string-in-osd osd string @
+       [line-number 0]
+Display @var{string} in the @var{line-number} of @var{osd}.
+This is a wrapper around @code{xosd-display-string} procedure.
+@end deffn
+
+@deffn {Scheme Procedure} display-percentage-in-osd osd percentage @
+       [line-number 0]
+Display @var{percentage} in the @var{line-number} of @var{osd}.
+This is a wrapper around @code{xosd-display-percentage} procedure.
+@end deffn
+
+@deffn {Scheme Procedure} display-slider-in-osd osd percentage @
+       [line-number 0]
+Display slider @var{percentage} in the @var{line-number} of @var{osd}.
+This is a wrapper around @code{xosd-display-slider} procedure.
 @end deffn
 
 @node Example
