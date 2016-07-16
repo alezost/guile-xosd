@@ -68,7 +68,7 @@
  (ice-9 rdelim)
  (ice-9 regex)
  (srfi srfi-11)
- (xosd))
+ (xosd bindings))
 
 (define %color-muted "#E74F35")
 (define %color-unmuted "#23B13E")

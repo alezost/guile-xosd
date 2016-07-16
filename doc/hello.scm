@@ -1,4 +1,4 @@
-(use-modules (xosd))
+(use-modules (xosd bindings))
 
 (let ((osd (xosd-create 1)))
   (xosd-set-timeout! osd 3)

@@ -123,39 +123,39 @@ $ ./configure --prefix=/usr
 @chapter API Reference
 
 This chapter describes the Guile procedures provided by the
-Guile-XOSD.  @code{xosd} module provides procedures that have names
-very similar to the names of @code{libxosd} C procedures, while
-@code{(xosd aliases)} module exports procedures with the more
+Guile-XOSD.  @code{(xosd bindings)} module provides procedures that
+have names very similar to the names of @code{libxosd} C procedures,
+while @code{(xosd)} module exports procedures with the more
 ``Schemey'' names.
 
 @menu
-* Straight procedures::		@code{(xosd)} module
-* Aliases::			@code{(xosd aliases)} module
+* Direct bindings::		@code{(xosd bindings)} module
+* Aliases and wrappers::	@code{(xosd)} module
 @end menu
 
-@node Straight procedures
-@section Straight procedures
+@node Direct bindings
+@section Direct bindings
 
-This section lists Guile procedures exported by the @code{(xosd)}
-module.  These procedures have almost the same names as the original C
-procedures provided by the @code{libxosd} library.  Of course the
-names are modified to become the regular Scheme names: @code{_} is
-replaced by @code{-}, and there are @code{?} and @code{!} where
-appropriate, but the rest left unchanged.
+This section lists Guile procedures exported by the @code{(xosd
+bindings)} module.  These procedures have almost the same names as the
+original C procedures provided by the @code{libxosd} library.  Of
+course the names are modified to become the regular Scheme names:
+@code{_} is replaced by @code{-}, and there are @code{?} and @code{!}
+where appropriate, but the rest left unchanged.
 
 For example, all procedures have @code{xosd-} prefix.  Also
 color-related procedures in @code{libxosd} have ``colour'' spelling
 (e.g., @code{xosd_set_colour}, not @code{xosd_set_color}).  Procedures
-from @code{(xosd)} module inherit this spelling.
+from @code{(xosd bindings)} module inherit this spelling.
 
 @include procedures.texi
 
-@node Aliases
-@section Aliases
+@node Aliases and wrappers
+@section Aliases and wrappers
 
-@code{(xosd aliases)} module provides other names for all the
-procedures described in the previous section.  These names are
-intended to be more ``Schemey'' and more clear.
+@code{(xosd)} module provides other names for all the procedures
+described in the previous section.  These names are intended to be
+more ``Schemey'' and more clear.
 
 The main rules for these names are:
 
@@ -210,7 +210,7 @@ your screen for 3 seconds.
 @end lisp
 
 You can find other examples of using both @code{(xosd)} and
-@code{(xosd aliases)} modules in the
+@code{(xosd bindings)} modules in the
 @file{<prefix>/share/guile-xosd/examples} directory.
 
 @node Hacking

@@ -23,8 +23,8 @@ xosd-procedures.txt: $(top_srcdir)/doc/procedures.texi
 	  "$<" > $@
 
 MODULES =					\
-  xosd.scm					\
-  xosd/aliases.scm
+  xosd/bindings.scm				\
+  xosd.scm
 
 CONFIG_SCM = xosd/config.scm
 CONFIG_GO  = $(CONFIG_SCM:%.scm=%.go)

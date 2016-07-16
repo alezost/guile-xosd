@@ -23,7 +23,7 @@
 
 ;;; Code:
 
-(use-modules (xosd aliases))
+(use-modules (xosd))
 
 (define (setup-osd osd)
   (set-osd-position! osd 'middle)

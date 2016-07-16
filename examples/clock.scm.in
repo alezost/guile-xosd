@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(use-modules (xosd))
+(use-modules (xosd bindings))
 
 (define (setup-clock osd)
   "Set up the OSD object to display the clock."

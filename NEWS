@@ -2,13 +2,13 @@
 
 * Changes in 0.2 (since 0.1)
 
-** (xosd aliases) module added
+** Procedures from (xosd) module moved to (xosd bindings)
 
-** New example added
+Now (xosd) module contains more Schemey aliases and wrappers.
 
-"message.scm" example uses (xosd aliases) module.
+** New "message.scm" example added
 
-** `xosd-create' argument is optional (defaults to 1)
+** Argument for `xosd-create' is optional (defaults to 1)
 
 ** "pre-inst-env.el" added
 

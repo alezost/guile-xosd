@@ -1,4 +1,4 @@
-;;; xosd.scm --- Guile bindings for libxosd
+;;; xosd.scm --- Guile-XOSD procedures
 
 ;; Copyright © 2016 Alex Kost <alezost@gmail.com>
 
@@ -19,18 +19,39 @@
 
 ;;; Commentary:
 
-;; This Guile module provides bindings for the libxosd C library.
+;; This module provides more "Schemey" procedures than the ones from
+;; (xosd bindings) module.
 
 ;;; Code:
 
 (define-module (xosd)
-  #:use-module (ice-9 documentation)
-  #:use-module (xosd config))
+  #:use-module (xosd bindings))
 
-(dynamic-call "init_xosd" (dynamic-link %library-file-name))
-
-(unless (member %documentation-file-name documentation-files)
-  (set! documentation-files (cons %documentation-file-name
-                                  documentation-files)))
+(define-public make-osd xosd-create)
+(define-public kill-osd xosd-destroy)
+(define-public show-osd xosd-show)
+(define-public hide-osd xosd-hide)
+(define-public scroll-osd xosd-scroll)
+(define-public display-string-in-osd xosd-display-string)
+(define-public display-percentage-in-osd xosd-display-percentage)
+(define-public display-slider-in-osd xosd-display-slider)
+(define-public osd-color xosd-get-colour)
+(define-public osd-number-of-lines xosd-get-number-lines)
+(define-public osd-on-screen? xosd-onscreen?)
+(define-public osd-displayed? xosd-onscreen?)
+(define-public set-osd-align! xosd-set-align!)
+(define-public set-osd-position! xosd-set-pos!)
+(define-public set-osd-bar-length! xosd-set-bar-length!)
+(define-public set-osd-timeout! xosd-set-timeout!)
+(define-public set-osd-color! xosd-set-colour!)
+(define-public set-osd-font! xosd-set-font!)
+(define-public set-osd-horizontal-offset! xosd-set-horizontal-offset!)
+(define-public set-osd-vertical-offset! xosd-set-vertical-offset!)
+(define-public set-osd-outline-offset! xosd-set-outline-offset!)
+(define-public set-osd-shadow-offset! xosd-set-shadow-offset!)
+(define-public set-osd-outline-color! xosd-set-outline-colour!)
+(define-public set-osd-shadow-color! xosd-set-shadow-colour!)
+(define-public wait-while-osd-displayed xosd-wait-until-no-display)
+(define-public wait-while-osd-on-screen xosd-wait-until-no-display)
 
 ;;; xosd.scm ends here
