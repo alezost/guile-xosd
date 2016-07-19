@@ -28,15 +28,20 @@
 ;;; Code:
 
 (let ((src-modules   (expand-file-name "modules" "@abs_top_srcdir@"))
-      (build-modules (expand-file-name "modules" "@abs_top_builddir@")))
-  (setenv "GUILE_LOAD_COMPILED_PATH"
-          (concat build-modules ":" (getenv "GUILE_LOAD_COMPILED_PATH")))
+      (build-modules (expand-file-name "modules" "@abs_top_builddir@"))
+      (guile-path    (getenv "GUILE_LOAD_PATH"))
+      (guile-cpath   (getenv "GUILE_LOAD_COMPILED_PATH")))
   (setenv "GUILE_LOAD_PATH"
-          (let ((base (concat build-modules ":"
-                              (getenv "GUILE_LOAD_PATH"))))
+          (let ((base (if guile-path
+                          (concat build-modules ":" guile-path)
+                        build-modules)))
             (if (string= src-modules build-modules)
                 base
               (concat src-modules ":" base))))
+  (setenv "GUILE_LOAD_COMPILED_PATH"
+          (if guile-cpath
+              (concat build-modules ":" guile-cpath)
+            build-modules))
   (setenv "GUILE_XOSD_LIBDIR" (expand-file-name "src/.libs"
                                                 "@abs_top_builddir@"))
   (setenv "GUILE_XOSD_DOCDIR" src-modules))
