@@ -68,28 +68,29 @@
  (ice-9 rdelim)
  (ice-9 regex)
  (srfi srfi-11)
- (xosd bindings))
+ (xosd))
 
 (define %color-muted "#E74F35")
 (define %color-unmuted "#23B13E")
 (define %color-error "orange")
 
-(define (setup-osd osd)
-  (xosd-set-timeout! osd 3)
-  (xosd-set-pos! osd 'bottom)
-  (xosd-set-align! osd 'center)
-  (xosd-set-font! osd "-*-dejavu sans-bold-r-normal-*-*-300-*-*-p-*-*-1")
-  (xosd-set-shadow-offset! osd 2))
+(define %osd
+  (make-osd #:lines 2
+            #:timeout 3
+            #:position 'bottom
+            #:align 'center
+            #:font "-*-dejavu sans-bold-r-normal-*-*-300-*-*-p-*-*-1"
+            #:shadow-offset 2))
 
 (define* (display-sound osd #:key volume mute?)
-  (xosd-set-colour! osd (if mute? %color-muted %color-unmuted))
-  (xosd-display-string osd 0 (format #f "Volume: ~d%" volume))
-  (xosd-display-percentage osd 1 volume))
+  (set-osd-color! osd (if mute? %color-muted %color-unmuted))
+  (display-string-in-osd osd (format #f "Volume: ~d%" volume))
+  (display-percentage-in-osd osd volume 1))
 
 (define (display-error osd)
-  (xosd-set-colour! osd %color-error)
-  (xosd-display-string osd 0 "")
-  (xosd-display-string osd 1 "Oops, can't parse amixer output :-)"))
+  (set-osd-color! osd %color-error)
+  (display-string-in-osd osd "")
+  (display-string-in-osd osd "Oops, can't parse amixer output :-)" 1))
 
 (define (call-amixer . args)
   "Call 'amixer' with ARGS and return its output."
@@ -124,12 +125,10 @@ current sound volume.\n"
      (let-values (((volume mute?)
                    (parse-amixer-output
                     (apply call-amixer amixer-args))))
-       (let ((osd (xosd-create 2)))
-         (setup-osd osd)
-         (if volume
-             (display-sound osd #:volume volume #:mute? mute?)
-             (display-error osd))
-         (xosd-wait-until-no-display osd))))
+       (if volume
+           (display-sound %osd #:volume volume #:mute? mute?)
+           (display-error %osd))
+       (wait-while-osd-displayed %osd)))
     (_ (show-help))))
 
 (when (batch-mode?)
