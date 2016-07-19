@@ -118,8 +118,8 @@ SCM_DEFINE_PUBLIC (scm_xosd_set_pos,
         xosd_pos = XOSD_bottom;
     else if (!strcmp("middle", pos_str))
         xosd_pos = XOSD_middle;
-    else /* throw an error? */
-        return SCM_BOOL_F;
+    else
+        error("Unknown position: ~S", scm_list_1(pos));
 
     xosd_set_pos(XOSD(osd), xosd_pos);
     return SCM_UNSPECIFIED;
@@ -146,8 +146,8 @@ SCM_DEFINE_PUBLIC (scm_xosd_set_align,
         xosd_align = XOSD_right;
     else if (!strcmp("center", align_str))
         xosd_align = XOSD_center;
-    else /* throw an error? */
-        return SCM_BOOL_F;
+    else
+        error("Unknown align: ~S", scm_list_1(align));
 
     xosd_set_align(XOSD(osd), xosd_align);
     return SCM_UNSPECIFIED;
