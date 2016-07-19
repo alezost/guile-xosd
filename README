@@ -20,20 +20,20 @@ be used:
 And here is the code to display the OSD from the second screenshot:
 
 #+BEGIN_SRC scheme
-(use-modules (xosd bindings))
+(use-modules (xosd))
 
-(define osd (xosd-create 2))
-
-(xosd-set-pos! osd 'top)
-(xosd-set-align! osd 'center)
-(xosd-set-font! osd "-*-ubuntu-bold-r-normal--*-500-*-*-p-*-*-1")
-(xosd-set-colour! osd "dark green")
-(xosd-set-outline-offset! osd 1)
-(xosd-set-outline-colour! osd "white")
+(define osd
+  (make-osd #:lines 2
+            #:position 'top
+            #:align 'center
+            #:font "-*-ubuntu-bold-r-normal--*-500-*-*-p-*-*-1"
+            #:color "dark green"
+            #:outline-offset 1
+            #:outline-color "white"))
 
 (define (display-percentage percent)
-  (xosd-display-string osd 0 (format #f "~a%" percent))
-  (xosd-display-percentage osd 1 percent))
+  (display-string-in-osd osd (format #f "~a%" percent) 0)
+  (display-percentage-in-osd osd percent 1))
 
 (display-percentage 73)
 #+END_SRC
