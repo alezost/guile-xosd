@@ -379,6 +379,7 @@ SCM_DEFINE_PUBLIC (scm_xosd_create,
                    (SCM n),
                    "")
 {
+    xosd *osd;
     int lines;
     if (SCM_UNBNDP(n)) {
         lines = 1;
@@ -389,7 +390,11 @@ SCM_DEFINE_PUBLIC (scm_xosd_create,
             error("The number of OSD lines should be more than 0",
                   SCM_BOOL_F);
     }
-    SCM_RETURN_NEWSMOB(xosd_tag, xosd_create(lines));
+    osd = xosd_create(lines);
+    if (!osd)
+        /* Maybe DISPLAY is not set, or connection to X server failed. */
+        error("Error during creating xosd object", SCM_BOOL_F);
+    SCM_RETURN_NEWSMOB(xosd_tag, osd);
 }
 
 SCM_DEFINE_PUBLIC (scm_xosd_destroy,
