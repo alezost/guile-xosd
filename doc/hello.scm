@@ -1,12 +1,12 @@
-(use-modules (xosd bindings))
+(use-modules (xosd))
 
-(let ((osd (xosd-create 1)))
-  (xosd-set-timeout! osd 3)
-  (xosd-set-pos! osd 'bottom)
-  (xosd-set-align! osd 'left)
-  (xosd-set-font! osd "-*-dejavu sans-bold-r-normal-*-*-300-*-*-p-*-*-1")
-  (xosd-set-colour! osd "gold")
-  (xosd-set-shadow-offset! osd 1)
-  (xosd-display-string osd 0 "Hello!")
-  (xosd-wait-until-no-display osd)
-  (xosd-destroy osd))
+(let ((osd (make-osd #:timeout 3
+                     #:position 'top
+                     #:align 'right
+                     #:font "-*-dejavu sans-bold-r-normal-*-*-600-*-*-p-*-*-1"
+                     #:color "yellow"
+                     #:shadow-color "red"
+                     #:shadow-offset 3)))
+  (display-string-in-osd osd "Hello!")
+  (wait-while-osd-displayed osd)
+  (kill-osd osd))
