@@ -55,9 +55,14 @@
 ;; when the previous one(s) is(are) still alive.
 ;;
 ;; In practice I use the following solution, that allows me to overcome
-;; both downsides: ... (TODO publish guile-daemon and mention it here).
-;; As you can see, I'm still using guile to set the sound and to display
-;; OSD, but it is *very fast* and it's the same OSD object every time!
+;; both downsides: I start Guile-Daemon with the config that sets all
+;; this "sound OSD" stuff, and then I just send small Guile expressions
+;; to the Daemon for evaluating.  As you can see, I'm still using Guile
+;; to set the sound and to display OSD, but it is *very fast* and it's
+;; the same OSD object every time!
+;;
+;; Guile-Daemon: <https://github.com/alezost/guile-daemon>
+;; My config for Guile-Daemon: <https://github.com/alezost/guile-daemon-config>
 
 ;;; Code:
 
