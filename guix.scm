@@ -47,7 +47,7 @@
 (define guile-xosd
   (package
     (name "guile-xosd")
-    (version "0.1")
+    (version "0.2")
     (source (origin
               (method url-fetch)
               (uri (string-append "https://github.com/alezost/" name
@@ -55,7 +55,7 @@
                                   "/" name "-" version ".tar.gz"))
               (sha256
                (base32
-                "0jrz4gkhgzbs7244583f0an4ynf7z9gninqj4xpspwq47463ifzy"))))
+                "1j0b07kycccfslp5n6q0hz7adwc7k41fpzds2dvrly67gavjqljv"))))
     (build-system gnu-build-system)
     (native-inputs
      `(("pkg-config" ,pkg-config)))
@@ -74,7 +74,7 @@ Screen Display\" library.")
 
 (define guile-xosd-devel
   (let ((revision "1")
-        (commit "e7345d03b409e5b0d4a9868a46db2fed0521dbc4"))
+        (commit "1b1ec7199fb0f50cbeffc768da21fc507155793a"))
     (package
       (inherit guile-xosd)
       (version (string-append (package-version guile-xosd)
@@ -83,13 +83,15 @@ Screen Display\" library.")
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
-                      (url "git://github.com/alezost/guile-xosd.git")
+                      (url (string-append "git://github.com/alezost/"
+                                          (package-name guile-xosd)
+                                          ".git"))
                       (commit commit)))
                 (file-name (string-append (package-name guile-xosd)
                                           "-" version "-checkout"))
                 (sha256
                  (base32
-                  "0rn00icq85nbcvvgmqclf9l656srczkhzj83c527lcj6b28iprvp"))))
+                  "1fnz6ccicgdlw3cmisba5xx3cws360y8rqiig3kw6djy262jflb8"))))
       (arguments
        '(#:phases
          (modify-phases %standard-phases
