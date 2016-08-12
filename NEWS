@@ -1,5 +1,9 @@
 -*- mode: org -*-
 
+* Changes in 0.2.1 (since 0.2)
+
+** Support for Guile 2.2 added
+
 * Changes in 0.2 (since 0.1)
 
 ** Procedures from (xosd) module moved to (xosd bindings)

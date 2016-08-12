@@ -32,10 +32,24 @@ AC_PROG_LIBTOOL
 LIBRARY_NAME="libguile-xosd"
 AC_SUBST([LIBRARY_NAME])
 
-dnl Check for Guile.
+dnl ----------------------------------------------------------------
+dnl Checking for Guile
 
-PKG_CHECK_MODULES([GUILE], [guile-2.0 >= 2.0.2])
-GUILE_PKG
+guile_version=no
+supported_versions="2.2 2.0"
+for version in $supported_versions; do
+  if test $guile_version = no; then
+    AC_MSG_NOTICE([checking for Guile $version])
+    PKG_CHECK_MODULES(GUILE, guile-$version, [guile_version=$version], [true])
+  fi
+done
+
+if test $guile_version = no; then
+  AC_MSG_ERROR([failed to find supported Guile version])
+else
+  AC_MSG_NOTICE([found Guile $guile_version])
+fi
+
 GUILE_PROGS
 
 AC_ARG_WITH([guile-site-dir],
@@ -56,7 +70,8 @@ AC_SUBST([guileccachedir])
 AC_MSG_CHECKING([for the Guile ccache directory])
 AC_MSG_RESULT([$guileccachedir])
 
-dnl Check for libxosd.  Unfortunately, libxosd does not provide
+dnl ----------------------------------------------------------------
+dnl Checking for libxosd.  Unfortunately, libxosd does not provide
 dnl pkgconfig file, but it has 'xosd-config' script that can be used to
 dnl define cflags and libs.
 
