@@ -74,8 +74,12 @@ $ ./pre-inst-env guile
 scheme@(guile-user)> ,use(xosd)
 #+END_SRC
 
-* Building with Guix
+* Building/installing with Guix
 
-This repository contains [[file:guix.scm]] file which can be used to build
-or install the development version of Guile-XOSD with [[http://www.gnu.org/software/guix/][GNU Guix]] (this
-file also contains the package for the latest release).
+The latest version of Guile-XOSD can be installed with [[http://www.gnu.org/software/guix/][GNU Guix]]:
+https://www.gnu.org/software/guix/packages/#guile-xosd.
+
+Also this repository contains [[file:guix.scm]] file which can be used to
+build/install the development version of Guile-XOSD, or to make a
+development environment for it (see the commentary in that file for more
+details).
