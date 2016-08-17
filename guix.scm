@@ -67,7 +67,7 @@
 (define guile-xosd
   (package
     (name "guile-xosd")
-    (version "0.2")
+    (version "0.2.1")
     (source (origin
               (method url-fetch)
               (uri (string-append "https://github.com/alezost/" name
@@ -75,7 +75,7 @@
                                   "/" name "-" version ".tar.gz"))
               (sha256
                (base32
-                "1j0b07kycccfslp5n6q0hz7adwc7k41fpzds2dvrly67gavjqljv"))))
+                "1ri5065c16kmgrf2pysn2ymxjqi5302lhpb07wkl1jr75ym8fn8p"))))
     (build-system gnu-build-system)
     (native-inputs
      `(("pkg-config" ,pkg-config)))
