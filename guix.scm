@@ -1,6 +1,6 @@
 ;;; guix.scm --- Guix package for Guile-XOSD
 
-;; Copyright © 2016–2017 Alex Kost <alezost@gmail.com>
+;; Copyright © 2016–2017, 2021 Alex Kost <alezost@gmail.com>
 
 ;; This file is part of Guile-XOSD.
 
@@ -59,7 +59,7 @@ newspace."
   (with-directory-excursion %source-dir
     (let* ((port   (apply open-pipe* OPEN_READ "git" args))
            (output (read-string port)))
-      (close-port port)
+      (close-pipe port)
       (string-trim-right output #\newline))))
 
 (define (git-files)
