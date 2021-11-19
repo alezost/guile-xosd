@@ -1,5 +1,5 @@
 define(GUILE_XOSD_CONFIGURE_COPYRIGHT, [[
-Copyright (C) 2016 Alex Kost <alezost@gmail.com>
+Copyright (C) 2016, 2021 Alex Kost <alezost@gmail.com>
 
 This file is part of Guile-XOSD.
 
@@ -35,22 +35,8 @@ AC_SUBST([LIBRARY_NAME])
 dnl ----------------------------------------------------------------
 dnl Checking for Guile
 
-guile_version=no
-supported_versions="2.2 2.0"
-for version in $supported_versions; do
-  if test $guile_version = no; then
-    AC_MSG_NOTICE([checking for Guile $version])
-    PKG_CHECK_MODULES(GUILE, guile-$version, [guile_version=$version], [true])
-  fi
-done
-
-if test $guile_version = no; then
-  AC_MSG_ERROR([failed to find supported Guile version])
-else
-  AC_MSG_NOTICE([found Guile $guile_version])
-fi
-
-GUILE_PROGS
+GUILE_PKG([3.0 2.2 2.0])
+GUILE_PROGS([2.0.2])
 
 AC_ARG_WITH([guile-site-dir],
   [AS_HELP_STRING([--with-guile-site-dir],
