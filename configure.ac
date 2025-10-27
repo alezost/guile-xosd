@@ -1,5 +1,5 @@
 define(GUILE_XOSD_CONFIGURE_COPYRIGHT, [[
-Copyright (C) 2016, 2021 Alex Kost <alezost@gmail.com>
+Copyright (C) 2016-2025 Alex Kost <alezost@gmail.com>
 
 This file is part of Guile-XOSD.
 
@@ -74,13 +74,13 @@ fi
 
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
-                 examples/message.scm
-                 examples/clock.scm
-                 examples/sound.scm
                  modules/Makefile
                  modules/xosd/config.scm
                  src/Makefile
                  pre-inst-env.el])
 AC_CONFIG_FILES([pre-inst-env], [chmod +x pre-inst-env])
+AC_CONFIG_FILES([examples/message.scm], [chmod +x examples/message.scm])
+AC_CONFIG_FILES([examples/clock.scm], [chmod +x examples/clock.scm])
+AC_CONFIG_FILES([examples/sound.scm], [chmod +x examples/sound.scm])
 
 AC_OUTPUT
