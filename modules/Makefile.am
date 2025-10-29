@@ -1,6 +1,6 @@
 # Makefile.am --- GNU Automake file to build guile modules
 
-# Copyright (C) 2016 Alex Kost <alezost@gmail.com>
+# Copyright (C) 2016-2025 Alex Kost <alezost@gmail.com>
 
 # This file is part of Guile-XOSD.
 
@@ -30,7 +30,6 @@ CONFIG_SCM = xosd/config.scm
 CONFIG_GO  = $(CONFIG_SCM:%.scm=%.go)
 
 GO_FILES = $(CONFIG_GO) $(MODULES:%.scm=%.go)
-$(GO_FILES): $(abs_top_builddir)/src/libguile-xosd.la
 
 nobase_dist_guilemodule_DATA = $(MODULES)
 nobase_nodist_guilemodule_DATA = $(CONFIG_SCM) xosd-procedures.txt
@@ -49,11 +48,9 @@ $(guile_xosd_install_go_files): install-nobase_nodist_guilemoduleDATA
 GUILEC_ENV =						\
   GUILE_AUTO_COMPILE=0					\
   GUILE_LOAD_PATH="$(abs_srcdir):$(abs_builddir)"	\
-  GUILE_LOAD_COMPILED_PATH="$(abs_builddir)"		\
-  GUILE_XOSD_LIBDIR="$(abs_top_builddir)/src/.libs"
+  GUILE_LOAD_COMPILED_PATH="$(abs_builddir)"
 
 GUILEC_OPTS =					\
-  --target=$(host)				\
   -Warity-mismatch				\
   -Wformat					\
   -Wunbound-variable				\

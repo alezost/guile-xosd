@@ -1,6 +1,6 @@
 ;;; config.scm --- Configuration module for Guile-XOSD
 
-;; Copyright © 2016 Alex Kost <alezost@gmail.com>
+;; Copyright © 2016–2025 Alex Kost <alezost@gmail.com>
 
 ;; This file is part of Guile-XOSD.
 
@@ -26,10 +26,7 @@
 (define-module (xosd config)
   #:use-module (ice-9 regex)
   #:use-module (srfi srfi-26)
-  #:export (%documentation-file-name
-            %library-name
-            %library-directory
-            %library-file-name))
+  #:export (%documentation-file-name))
 
 ;; This code of 'config-lookup' (modified a bit) is taken from
 ;; <http://git.savannah.gnu.org/cgit/guix.git/tree/scripts/guix.in>.
@@ -41,8 +38,7 @@ to find out the value of 'exec_prefix' at first, etc."
   (define config
     '(("prefix"         . "@prefix@")
       ("exec_prefix"    . "@exec_prefix@")
-      ("guilemoduledir" . "@guilemoduledir@")
-      ("libdir"         . "@libdir@")))
+      ("guilemoduledir" . "@guilemoduledir@")))
 
   (define var-ref-regexp (make-regexp "\\$\\{([a-z_]+)\\}"))
 
@@ -57,17 +53,6 @@ to find out the value of 'exec_prefix' at first, etc."
     (expand (assoc-ref config name)))
 
   (lookup variable))
-
-(define %library-name
-  "@LIBRARY_NAME@")
-
-(define %library-directory
-  (or (getenv "GUILE_XOSD_LIBDIR")
-      (config-lookup "libdir")))
-
-;; File name of the library without extension.
-(define %library-file-name
-  (string-append %library-directory "/" %library-name))
 
 ;; File with documentation for Guile procedures.
 (define %documentation-file-name

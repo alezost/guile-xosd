@@ -26,12 +26,6 @@ AC_CONFIG_AUX_DIR([build-aux])
 
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 
-AC_PROG_CC
-AC_PROG_LIBTOOL
-
-LIBRARY_NAME="libguile-xosd"
-AC_SUBST([LIBRARY_NAME])
-
 dnl ----------------------------------------------------------------
 dnl Checking for Guile
 
@@ -56,27 +50,10 @@ AC_SUBST([guileccachedir])
 AC_MSG_CHECKING([for the Guile ccache directory])
 AC_MSG_RESULT([$guileccachedir])
 
-dnl ----------------------------------------------------------------
-dnl Checking for libxosd.  Unfortunately, libxosd does not provide
-dnl pkgconfig file, but it has 'xosd-config' script that can be used to
-dnl define cflags and libs.
-
-dnl PKG_CHECK_MODULES([LIBXOSD], [libxosd >= 2.2])
-AC_PATH_PROG([XOSD_CONFIG], [xosd-config])
-if test "x$XOSD_CONFIG" = "x"; then
-  AC_MSG_ERROR(['xosd-config' script not found; please install libxosd.])
-else
-  LIBXOSD_CFLAGS="`$XOSD_CONFIG --cflags`"
-  LIBXOSD_LIBS="`$XOSD_CONFIG --libs`"
-  AC_SUBST([LIBXOSD_CFLAGS])
-  AC_SUBST([LIBXOSD_LIBS])
-fi
-
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  modules/Makefile
                  modules/xosd/config.scm
-                 src/Makefile
                  pre-inst-env.el])
 AC_CONFIG_FILES([pre-inst-env], [chmod +x pre-inst-env])
 AC_CONFIG_FILES([examples/message.scm], [chmod +x examples/message.scm])

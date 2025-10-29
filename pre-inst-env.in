@@ -2,7 +2,7 @@
 
 # pre-inst-env --- Pre-installation environment for Guile-XOSD
 
-# Copyright (C) 2016 Alex Kost <alezost@gmail.com>
+# Copyright (C) 2016-2025 Alex Kost <alezost@gmail.com>
 
 # This file is part of Guile-XOSD.
 
@@ -34,9 +34,6 @@ set_env () {
     GUILE_LOAD_COMPILED_PATH="${build_modules}${GUILE_LOAD_COMPILED_PATH:+:}$GUILE_LOAD_COMPILED_PATH"
     GUILE_LOAD_PATH="${src_modules}:${build_modules}${GUILE_LOAD_PATH:+:}$GUILE_LOAD_PATH"
     export GUILE_LOAD_COMPILED_PATH GUILE_LOAD_PATH
-
-    GUILE_XOSD_LIBDIR="@abs_top_builddir@/src/.libs"
-    export GUILE_XOSD_LIBDIR
 
     GUILE_XOSD_DOCDIR="$src_modules"
     export GUILE_XOSD_DOCDIR

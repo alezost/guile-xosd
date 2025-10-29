@@ -1,6 +1,6 @@
 ;;; pre-inst-env.el --- Pre-installation environment for Guile-XOSD
 
-;; Copyright (C) 2016 Alex Kost <alezost@gmail.com>
+;; Copyright © 2016–2025 Alex Kost <alezost@gmail.com>
 
 ;; This file is part of Guile-XOSD.
 
@@ -42,8 +42,6 @@
           (if guile-cpath
               (concat build-modules ":" guile-cpath)
             build-modules))
-  (setenv "GUILE_XOSD_LIBDIR" (expand-file-name "src/.libs"
-                                                "@abs_top_builddir@"))
   (setenv "GUILE_XOSD_DOCDIR" src-modules))
 
 ;;; pre-inst-env.el ends here

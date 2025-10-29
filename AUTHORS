@@ -2,6 +2,6 @@ Yann Hodique <Yann.Hodique@lifl.fr> is the original author of "lisposd"
 <https://github.com/sigma/lisposd>, i.e., of the C file with Guile
 bindings.
 
-Alex Kost <alezost@gmail.com> made some changes in "libguile-xosd.c" and
-wrote all the rest (GNU Build System infrastructure, guile modules,
+Alex Kost <alezost@gmail.com> replaced the original C code with Guile
+code and wrote all the rest (GNU Build System infrastructure,
 documentation and examples).
