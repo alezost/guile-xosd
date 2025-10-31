@@ -19,8 +19,6 @@
 
 SUBDIRS = doc modules
 
-EXTRA_DIST = build-aux/texi-to-docstrings.scm
-
 examplesdir = $(pkgdatadir)/examples
 nodist_examples_SCRIPTS = examples/*.scm
 

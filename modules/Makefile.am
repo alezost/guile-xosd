@@ -17,22 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
 
-xosd-procedures.txt: $(top_srcdir)/doc/procedures.texi
-	$(GUILE) --no-auto-compile				\
-	  "$(top_srcdir)/build-aux/texi-to-docstrings.scm"	\
-	  "$<" > $@
-
 MODULES =					\
   xosd/bindings.scm				\
   xosd.scm
 
-CONFIG_SCM = xosd/config.scm
-CONFIG_GO  = $(CONFIG_SCM:%.scm=%.go)
-
-GO_FILES = $(CONFIG_GO) $(MODULES:%.scm=%.go)
+GO_FILES = $(MODULES:%.scm=%.go)
 
 nobase_dist_guilemodule_DATA = $(MODULES)
-nobase_nodist_guilemodule_DATA = $(CONFIG_SCM) xosd-procedures.txt
 nobase_nodist_guileccache_DATA = $(GO_FILES)
 
 # Make sure source files are installed first, so that the mtime of
@@ -41,7 +32,6 @@ nobase_nodist_guileccache_DATA = $(GO_FILES)
 # <http://lists.gnu.org/archive/html/guile-devel/2010-07/msg00125.html>.
 guile_xosd_install_go_files = install-nobase_nodist_guileccacheDATA
 $(guile_xosd_install_go_files): install-nobase_dist_guilemoduleDATA
-$(guile_xosd_install_go_files): install-nobase_nodist_guilemoduleDATA
 
 # Add both srcdir and builddir to GUILE_LOAD_PATH because the generated
 # "config.scm" file is placed in the builddir.

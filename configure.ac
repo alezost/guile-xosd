@@ -53,7 +53,6 @@ AC_MSG_RESULT([$guileccachedir])
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  modules/Makefile
-                 modules/xosd/config.scm
                  pre-inst-env.el])
 AC_CONFIG_FILES([pre-inst-env], [chmod +x pre-inst-env])
 AC_CONFIG_FILES([examples/message.scm], [chmod +x examples/message.scm])

@@ -41,7 +41,6 @@
   (setenv "GUILE_LOAD_COMPILED_PATH"
           (if guile-cpath
               (concat build-modules ":" guile-cpath)
-            build-modules))
-  (setenv "GUILE_XOSD_DOCDIR" src-modules))
+            build-modules)))
 
 ;;; pre-inst-env.el ends here

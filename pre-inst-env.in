@@ -34,9 +34,6 @@ set_env () {
     GUILE_LOAD_COMPILED_PATH="${build_modules}${GUILE_LOAD_COMPILED_PATH:+:}$GUILE_LOAD_COMPILED_PATH"
     GUILE_LOAD_PATH="${src_modules}:${build_modules}${GUILE_LOAD_PATH:+:}$GUILE_LOAD_PATH"
     export GUILE_LOAD_COMPILED_PATH GUILE_LOAD_PATH
-
-    GUILE_XOSD_DOCDIR="$src_modules"
-    export GUILE_XOSD_DOCDIR
 }
 
 case "$1" in
