@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
 ]])
 
-AC_INIT([Guile-XOSD], [0.2.2], [alezost@gmail.com], [guile-xosd],
+AC_INIT([Guile-XOSD], [0.3], [alezost@gmail.com], [guile-xosd],
         [https://github.com/alezost/guile-xosd])
 
 AC_COPYRIGHT(GUILE_XOSD_CONFIGURE_COPYRIGHT)
