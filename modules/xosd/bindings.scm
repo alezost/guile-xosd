@@ -88,155 +88,209 @@
 ;;; XOSD library and its procedures
 
 (define xosd-library
-  (let ((lib #f))
+  (let ((lib (delay (load-foreign-library "libxosd"))))
     (lambda ()
       "Return the linked 'libxosd' library."
-      (or lib
-          (begin (set! lib (load-foreign-library "libxosd"))
-                 lib)))))
+      (force lib))))
 
 (define (xosd-procedure name)
   "Helper function to get pointers to libxosd procedures."
   (foreign-library-pointer (xosd-library) name))
 
 (define xosd-create
-  (let ((proc (xosd-procedure "xosd_create")))
-    (pointer->procedure '* proc (list int))))
+  (let ((proc (delay (pointer->procedure
+                      '* (xosd-procedure "xosd_create")
+                      (list int)))))
+    (lambda* (#:optional (number-of-lines 1))
+      ((force proc) number-of-lines))))
 
 (define xosd-destroy
-  (let ((proc (xosd-procedure "xosd_destroy")))
-    (pointer->procedure int proc (list '*))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_destroy")
+                      (list '*)))))
+    (lambda (osd)
+      ((force proc) osd))))
 
-(define (xosd-display-string osd line-number string)
-  (let ((proc (xosd-procedure "xosd_display")))
-    ((pointer->procedure int proc (list '* int int '*))
-     osd line-number %XOSD_string (string->pointer string))))
+(define xosd-display-string
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_display")
+                      (list '* int int '*)))))
+    (lambda (osd line-number string)
+      ((force proc) osd line-number %XOSD_string (string->pointer string)))))
 
-(define (xosd-display-percentage osd line-number percentage)
-  (let ((proc (xosd-procedure "xosd_display")))
-    ((pointer->procedure int proc (list '* int int int))
-     osd line-number %XOSD_percentage percentage)))
-
-(define (xosd-display-slider osd line-number percentage)
-  (let ((proc (xosd-procedure "xosd_display")))
-    ((pointer->procedure int proc (list '* int int int))
-     osd line-number %XOSD_slider percentage)))
+(define-values (xosd-display-percentage
+                xosd-display-slider)
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_display")
+                      (list '* int int int)))))
+    (values
+     (lambda (osd line-number percentage)
+       ((force proc) osd line-number %XOSD_percentage percentage))
+     (lambda (osd line-number percentage)
+       ((force proc) osd line-number %XOSD_slider percentage)))))
 
 (define xosd-hide
-  (let ((proc (xosd-procedure "xosd_hide")))
-    (pointer->procedure int proc (list '*))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_hide")
+                      (list '*)))))
+    (lambda (osd)
+      ((force proc) osd))))
 
 (define xosd-show
-  (let ((proc (xosd-procedure "xosd_show")))
-    (pointer->procedure int proc (list '*))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_show")
+                      (list '*)))))
+    (lambda (osd)
+      ((force proc) osd))))
 
-(define (xosd-onscreen? osd)
-  (let ((proc (xosd-procedure "xosd_is_onscreen")))
-    ;; TODO 'xosd_is_onscreen' can also return -1 (on failure).
-    (integer->bool ((pointer->procedure int proc (list '*))
-                    osd))))
+(define xosd-onscreen?
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_is_onscreen")
+                      (list '*)))))
+    (lambda (osd)
+      ;; TODO 'xosd_is_onscreen' can also return -1 (on failure).
+      (integer->bool ((force proc) osd)))))
 
 (define xosd-wait-until-no-display
-  (let ((proc (xosd-procedure "xosd_wait_until_no_display")))
-    (pointer->procedure int proc (list '*))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_wait_until_no_display")
+                      (list '*)))))
+    (lambda (osd)
+      ((force proc) osd))))
 
 (define xosd-set-bar-length!
-  (let ((proc (xosd-procedure "xosd_set_bar_length")))
-    (pointer->procedure int proc (list '* int))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_bar_length")
+                      (list '* int)))))
+    (lambda (osd length)
+      ((force proc) osd length))))
 
-(define (xosd-set-pos! osd position)
-  (let ((proc (xosd-procedure "xosd_set_pos"))
-        (pos  (case position
-                ((top)    %XOSD_top)
-                ((middle) %XOSD_middle)
-                ((bottom) %XOSD_bottom)
-                (else (begin
-                        (print-error "Unknown position: ~a" position)
-                        #f)))))
-    (when pos
-      ((pointer->procedure int proc (list '* int))
-       osd pos))))
+(define xosd-set-pos!
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_pos")
+                      (list '* int)))))
+    (lambda (osd position)
+      (let ((pos (case position
+                   ((top)    %XOSD_top)
+                   ((middle) %XOSD_middle)
+                   ((bottom) %XOSD_bottom)
+                   (else (begin
+                           (print-error "Unknown position: ~a" position)
+                           #f)))))
+        (when pos
+          ((force proc) osd pos))))))
 
-(define (xosd-set-align! osd position)
-  (let ((proc (xosd-procedure "xosd_set_align"))
-        (pos  (case position
-                ((left)   %XOSD_left)
-                ((center) %XOSD_center)
-                ((right)  %XOSD_right)
-                (else (begin
-                        (print-error "Unknown align: ~a" position)
-                        #f)))))
-    (when pos
-      ((pointer->procedure int proc (list '* int))
-       osd pos))))
+(define xosd-set-align!
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_align")
+                      (list '* int)))))
+    (lambda (osd align)
+      (let ((pos (case align
+                   ((left)   %XOSD_left)
+                   ((center) %XOSD_center)
+                   ((right)  %XOSD_right)
+                   (else (begin
+                           (print-error "Unknown align: ~a" align)
+                           #f)))))
+        (when pos
+          ((force proc) osd pos))))))
 
 (define xosd-set-timeout!
-  (let ((proc (xosd-procedure "xosd_set_timeout")))
-    (pointer->procedure int proc (list '* int))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_timeout")
+                      (list '* int)))))
+    (lambda (osd time)
+      ((force proc) osd time))))
 
-(define (xosd-set-font! osd font)
-  (let ((proc (xosd-procedure "xosd_set_font")))
-    ((pointer->procedure int proc (list '* '*))
-     osd (string->pointer font))))
+(define xosd-set-font!
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_font")
+                      (list '* '*)))))
+    (lambda (osd font)
+      ((force proc) osd (string->pointer font)))))
 
-(define (xosd-set-colour! osd colour)
-  (let ((proc (xosd-procedure "xosd_set_colour")))
-    ((pointer->procedure int proc (list '* '*))
-     osd (string->pointer colour))))
+(define xosd-set-colour!
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_colour")
+                      (list '* '*)))))
+    (lambda (osd color)
+      ((force proc) osd (string->pointer color)))))
 
-(define (xosd-set-shadow-colour! osd colour)
-  (let ((proc (xosd-procedure "xosd_set_shadow_colour")))
-    ((pointer->procedure int proc (list '* '*))
-     osd (string->pointer colour))))
+(define xosd-set-shadow-colour!
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_shadow_colour")
+                      (list '* '*)))))
+    (lambda (osd color)
+      ((force proc) osd (string->pointer color)))))
 
-(define (xosd-set-outline-colour! osd colour)
-  (let ((proc (xosd-procedure "xosd_set_outline_colour")))
-    ((pointer->procedure int proc (list '* '*))
-     osd (string->pointer colour))))
+(define xosd-set-outline-colour!
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_outline_colour")
+                      (list '* '*)))))
+    (lambda (osd color)
+      ((force proc) osd (string->pointer color)))))
 
 (define xosd-set-vertical-offset!
-  (let ((proc (xosd-procedure "xosd_set_vertical_offset")))
-    (pointer->procedure int proc (list '* int))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_vertical_offset")
+                      (list '* int)))))
+    (lambda (osd offset)
+      ((force proc) osd offset))))
 
 (define xosd-set-horizontal-offset!
-  (let ((proc (xosd-procedure "xosd_set_horizontal_offset")))
-    (pointer->procedure int proc (list '* int))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_horizontal_offset")
+                      (list '* int)))))
+    (lambda (osd offset)
+      ((force proc) osd offset))))
 
 (define xosd-set-shadow-offset!
-  (let ((proc (xosd-procedure "xosd_set_shadow_offset")))
-    (pointer->procedure int proc (list '* int))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_shadow_offset")
+                      (list '* int)))))
+    (lambda (osd offset)
+      ((force proc) osd offset))))
 
 (define xosd-set-outline-offset!
-  (let ((proc (xosd-procedure "xosd_set_outline_offset")))
-    (pointer->procedure int proc (list '* int))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_set_outline_offset")
+                      (list '* int)))))
+    (lambda (osd offset)
+      ((force proc) osd offset))))
 
-(define (xosd-get-colour osd)
-  (let* ((endianness (native-endianness))
-         (int-size   (sizeof int))
-         (red-bv     (make-bytevector int-size))
-         (green-bv   (make-bytevector int-size))
-         (blue-bv    (make-bytevector int-size))
-         (red-ptr    (bytevector->pointer red-bv))
-         (green-ptr  (bytevector->pointer green-bv))
-         (blue-ptr   (bytevector->pointer blue-bv))
-         (proc       (xosd-procedure "xosd_get_colour"))
-         ;; Note: 'xosd_get_colour' returns X11 color formats which are
-         ;; 16-bit values (0-65535) instead of 8-bit values (0-255).
-         (result     ((pointer->procedure int proc (list '* '* '* '*))
-                      osd red-ptr green-ptr blue-ptr)))
-    (if (= result 0)
-        (list (bytevector-sint-ref red-bv 0   endianness int-size)
-              (bytevector-sint-ref green-bv 0 endianness int-size)
-              (bytevector-sint-ref blue-bv 0  endianness int-size))
-        #f)))
+(define xosd-get-colour
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_get_colour")
+                      (list '* '* '* '*)))))
+    (lambda (osd)
+      (let* ((endianness (native-endianness))
+             (int-size   (sizeof int))
+             (red-bv     (make-bytevector int-size))
+             (green-bv   (make-bytevector int-size))
+             (blue-bv    (make-bytevector int-size))
+             (red-ptr    (bytevector->pointer red-bv))
+             (green-ptr  (bytevector->pointer green-bv))
+             (blue-ptr   (bytevector->pointer blue-bv))
+             (result     ((force proc) osd red-ptr green-ptr blue-ptr)))
+        (if (= result 0)
+            (list (bytevector-sint-ref red-bv 0   endianness int-size)
+                  (bytevector-sint-ref green-bv 0 endianness int-size)
+                  (bytevector-sint-ref blue-bv 0  endianness int-size))
+            #f)))))
 
 (define xosd-get-number-lines
-  (let ((proc (xosd-procedure "xosd_get_number_lines")))
-    (pointer->procedure int proc (list '*))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_get_number_lines")
+                      (list '*)))))
+    (lambda (osd)
+      ((force proc) osd))))
 
 (define xosd-scroll
-  (let ((proc (xosd-procedure "xosd_scroll")))
-    (pointer->procedure int proc (list '*))))
+  (let ((proc (delay (pointer->procedure
+                      int (xosd-procedure "xosd_scroll")
+                      (list '* int)))))
+    (lambda (osd number-of-lines)
+      ((force proc) osd number-of-lines))))
 
 
 ;;; Documentation
