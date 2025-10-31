@@ -1,5 +1,15 @@
 -*- mode: org -*-
 
+* Changes in 0.3 (since 0.2.2)
+
+** Auxiliary C library was replaced with Guile code
+
+As a result of removing C code, the package is significantly simplified.
+
+* Changes in 0.2.2 (since 0.2.1)
+
+** Support for Guile 3.0 added
+
 * Changes in 0.2.1 (since 0.2)
 
 ** Support for Guile 2.2 added
