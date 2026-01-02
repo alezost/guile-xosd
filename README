@@ -76,9 +76,4 @@ scheme@(guile-user)> ,use(xosd)
 * Building/installing with Guix
 
 The latest version of Guile-XOSD can be installed with [[http://www.gnu.org/software/guix/][GNU Guix]]:
-[[https://guix.gnu.org/en/packages/guile-xosd-0.2.2]].
-
-Also this repository contains [[file:guix.scm]] file which can be used to
-build/install Guile-XOSD using the git checkout, or to make a
-development environment for it (see the commentary in that file for more
-details).
+[[https://packages.guix.gnu.org/packages/guile-xosd]].
