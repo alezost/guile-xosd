@@ -249,15 +249,6 @@ All is needed is setting the following environment variables:
 @item GUILE_LOAD_PATH
 @itemx GUILE_LOAD_COMPILED_PATH
 @xref{Environment Variables,,, guile, GNU Guile Reference Manual}.
-
-@item GUILE_XOSD_LIBDIR
-Directory where @file{libguile-xosd} library is placed after
-compilation.  Usually it is @file{<builddir>/src/.libs}.
-
-@item GUILE_XOSD_DOCDIR
-Directory where @file{xosd-procedures.txt} (the file with docstrings
-for Guile procedures) is placed.  Usually it is
-@file{<srcdir>/modules}.
 @end table
 
 Setting them manually is not needed as Guile-XOSD provides
