@@ -2,7 +2,7 @@
 !#
 ;;; clock.scm --- Display clock OSD
 
-;; Copyright © 2016 Alex Kost <alezost@gmail.com>
+;; Copyright © 2016–2026 Alex Kost <alezost@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,25 +24,25 @@
 
 ;;; Code:
 
-(use-modules (xosd bindings))
+(use-modules (xosd))
 
 (define (setup-clock osd)
-  "Set up the OSD object to display the clock."
-  (xosd-set-pos! osd 'middle)
-  (xosd-set-align! osd 'center)
-  (xosd-set-font! osd "-*-dejavu sans-bold-r-normal-*-*-600-*-*-p-*-*-1")
-  (xosd-set-colour! osd "LimeGreen")
-  (xosd-set-shadow-offset! osd 3))
+  "Set up OSD object to display the clock."
+  (set-osd-position! osd 'middle)
+  (set-osd-align! osd 'center)
+  (set-osd-font! osd "-*-dejavu sans-bold-r-normal-*-*-600-*-*-p-*-*-1")
+  (set-osd-color! osd "LimeGreen")
+  (set-osd-shadow-offset! osd 3))
 
 (define (display-clock osd)
-  "Display the current time in the OSD object.
+  "Display the current time in OSD object.
 This procedure never exits."
-  (xosd-display-string osd 0 (strftime "%T" (localtime (current-time))))
+  (display-string-in-osd osd (strftime "%T" (localtime (current-time))))
   (sleep 1)
   (display-clock osd))
 
 (when (batch-mode?)
-  (let ((osd (xosd-create 1)))
+  (let ((osd (create-osd 1)))
     (setup-clock osd)
     (display-clock osd)))
 

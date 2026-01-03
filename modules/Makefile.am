@@ -1,6 +1,6 @@
 # Makefile.am --- GNU Automake file to build guile modules
 
-# Copyright (C) 2016-2025 Alex Kost <alezost@gmail.com>
+# Copyright (C) 2016-2026 Alex Kost <alezost@gmail.com>
 
 # This file is part of Guile-XOSD.
 
@@ -18,7 +18,6 @@
 # along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
 
 MODULES =					\
-  xosd/bindings.scm				\
   xosd.scm
 
 GO_FILES = $(MODULES:%.scm=%.go)

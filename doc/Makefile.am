@@ -1,6 +1,6 @@
 # Makefile.am --- GNU Automake file for documentation
 
-# Copyright (C) 2016 Alex Kost <alezost@gmail.com>
+# Copyright (C) 2016-2026 Alex Kost <alezost@gmail.com>
 
 # This file is part of Guile-XOSD.
 
@@ -21,7 +21,6 @@ info_TEXINFOS = guile-xosd.texi
 
 guile_xosd_TEXINFOS =				\
   hello.scm					\
-  fdl.texi					\
-  procedures.texi
+  fdl.texi
 
 # Makefile.am ends here

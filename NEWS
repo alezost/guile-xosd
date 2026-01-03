@@ -1,5 +1,17 @@
 -*- mode: org -*-
 
+* Changes in 0.4 (since 0.3)
+
+** (xosd bindings) and (xosd) modules merged
+
+Now (xosd) is the only Guile module.  It exports the same symbols as
+before except for `osd-on-screen?' and `wait-while-osd-on-screen' which
+were removed because they were duplicates of `osd-displayed?' and
+`wait-while-osd-displayed' respectively.
+
+`xosd-...' symbols that were exported by (xosd bindings) module don't
+exist anymore.
+
 * Changes in 0.3 (since 0.2.2)
 
 ** Auxiliary C library was replaced with Guile code

@@ -7,7 +7,7 @@
 @include version.texi
 
 @copying
-Copyright @copyright{} 2016 Alex Kost
+Copyright @copyright{} 2016-2026 Alex Kost
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -122,105 +122,219 @@ $ ./configure --prefix=/usr
 @node API Reference
 @chapter API Reference
 
-This chapter describes the Guile procedures provided by the
-Guile-XOSD.  @code{(xosd bindings)} module provides procedures that
-have names very similar to the names of @code{libxosd} C procedures,
-while @code{(xosd)} module exports procedures with the more
-``Schemey'' names.
+This chapter describes Guile procedures provided by Guile-XOSD.
+All of them are contained in @code{(xosd)} module.
 
 @menu
-* Direct bindings::		@code{(xosd bindings)} module
-* Aliases and wrappers::	@code{(xosd)} module
+* Direct bindings::
+* Higher-level wrappers::
 @end menu
 
 @node Direct bindings
 @section Direct bindings
 
-This section lists Guile procedures exported by the @code{(xosd
-bindings)} module.  These procedures have almost the same names as the
-original C procedures provided by the @code{libxosd} library.  Of
-course the names are modified to become the regular Scheme names:
-@code{_} is replaced by @code{-}, and there are @code{?} and @code{!}
-where appropriate, but the rest left unchanged.
+This section lists Guile procedures that are direct wrappers of the
+original C procedures provided by the @code{libxosd} library.  See
+@code{xosd.h} coming with @code{libxosd} for details on the C
+procedures.
 
-For example, all procedures have @code{xosd-} prefix.  Also
-color-related procedures in @code{libxosd} have ``colour'' spelling
-(e.g., @code{xosd_set_colour}, not @code{xosd_set_color}).  Procedures
-from @code{(xosd bindings)} module inherit this spelling.
+@deffn {Scheme Procedure} create-osd [number-of-lines]
+Wrapper for @code{xosd_create}.
 
-@include procedures.texi
+Create and return a new OSD object with the specified maximum
+@var{number-of-lines} (1 by default) that this object can display
+(this value cannot be changed after OSD creation).
+@end deffn
 
-@node Aliases and wrappers
-@section Aliases and wrappers
+@deffn {Scheme Procedure} kill-osd osd
+Wrapper for @code{xosd_destroy}.
 
-@code{(xosd)} module provides some wrappers and aliases for all the
-procedures described in the previous section.  These procedures are
-intended to be more ``Schemey'' and more clear.
+Destroy @var{osd} object (free up the used memory).
+@end deffn
 
-The main rules for the names of aliases are:
+@deffn {Scheme Procedure} display-string-in-osd osd string line-number
+Wrapper for @code{xosd_display} called with @code{XOSD_string} enumerator.
 
-@itemize @bullet
-@item
-@code{xosd} part is replaced with @code{osd} and for the most
-procedures (if not documented below) it is moved from the first place
-of a name to the second one.  For example, @code{show-osd} is an alias
-for @code{xosd-show}, @code{set-osd-font!} is an alias for
-@code{xosd-set-font!}.
+Display @var{string} in @var{line-number} of @var{osd} object.
+Line numbers are enumerated from zero i.e., @var{line-number} must be
+less than the number of lines set during @var{osd} creation.
 
-@item
-@code{colour} part is replaced with @code{color}.
-@end itemize
+This procedure returns immediately, but the @var{string} is displayed
+until timeout set by @code{set-osd-timeout!} is expired.  If blocking
+is required, @code{wait-while-osd-displayed} should be called after
+this procedure.
+@end deffn
 
-Above these rules, the following aliases exist:
+@deffn {Scheme Procedure} display-percentage-in-osd osd percentage line-number
+Wrapper for @code{xosd_display} called with @code{XOSD_percentage} enumerator.
 
-@table @code
-@item kill-osd
-Alias for @code{xosd-destroy}.
-@item osd-color
-Alias for @code{xosd-get-colour}.
-@item osd-number-of-lines
-Alias for @code{xosd-get-number-lines}.
-@item set-osd-position!
-Alias for @code{xosd-set-pos!}.
-@item osd-on-screen?
-@itemx osd-displayed?
-Aliases for @code{xosd-onscreen?}.
-@item wait-while-osd-on-screen
-@itemx wait-while-osd-displayed
-Aliases for @code{xosd-wait-until-no-display}.
-@end table
+Display @var{percentage} in @var{line-number} of @var{osd} object.
+@var{percentage} is a number between 0 and 100.  See also
+@code{display-string-in-osd}.
+@end deffn
 
-Also the following procedures are available:
+@deffn {Scheme Procedure} display-slider-in-osd osd percentage line-number
+Wrapper for @code{xosd_display} called with @code{XOSD_slider} enumerator.
+
+Display @var{percentage} in @var{line-number} of @var{osd} object.
+@var{percentage} (slider position) is a number between 0 and 100.  See
+also @code{display-string-in-osd}.
+@end deffn
+
+@deffn {Scheme Procedure} hide-osd osd
+Wrapper for @code{xosd_hide}.
+
+Hide @var{osd} object.
+@end deffn
+
+@deffn {Scheme Procedure} show-osd osd
+Wrapper for @code{xosd_show}.
+
+Show (redisplay) hidden @var{osd} object.
+@end deffn
+
+@deffn {Scheme Procedure} osd-displayed? osd
+Wrapper for @code{xosd_is_onscreen}.
+
+Return @code{#t} if @var{osd} object is displayed.  Return @code{#f}
+otherwise.
+@end deffn
+
+@deffn {Scheme Procedure} wait-while-osd-displayed osd
+Wrapper for @code{xosd_wait_until_no_display}.
+
+Wait until @var{osd} object will be hidden.  See also
+@code{display-string-in-osd}.
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-timeout! osd seconds
+Wrapper for @code{xosd_set_timeout}.
+
+Change the number of @var{seconds} before @var{osd} object is hidden.
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-font! osd font
+Wrapper for @code{xosd_set_font}.
+
+Change font of @var{osd} object.  @var{font} is a string with
+the XLFD full name of the new font (see @code{xfontsel} program for
+details).
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-bar-length! osd length
+Wrapper for @code{xosd_set_bar_length}.
+
+Change @var{length} of a slider or percentage bar of @var{osd} object.
+Setting @var{length} to -1 reverts to the default behavior.
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-position! osd position
+Wrapper for @code{xosd_set_pos}.
+
+Change vertical @var{position} of @var{osd} object.  @var{position}
+should be one of the following symbols: @code{top}, @code{middle}, or
+@code{bottom}.
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-align! osd align
+Wrapper for @code{xosd_set_align}.
+
+Change horizontal alignment of @var{osd} object.  @var{align} should
+be one of the following symbols: @code{left}, @code{center}, or
+@code{right}.
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-vertical-offset! osd offset
+Wrapper for @code{xosd_set_vertical_offset}.
+
+Change vertical offset of @var{osd} object.  @var{offset} is a number
+of pixels to offset @var{osd} from its default vertical position
+(specified by @code{set-osd-position!}).
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-horizontal-offset! osd offset
+Wrapper for @code{xosd_set_horizontal_offset}.
+
+Change horizontal offset of @var{osd} object.  @var{offset} is a
+number of pixels to offset @var{osd} from its default horizontal
+position (specified by @code{set-osd-align!}).
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-shadow-offset! osd offset
+Wrapper for @code{xosd_set_shadow_offset}.
+
+Change @var{offset} (number of pixels) of the text shadow of @var{osd}
+object.
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-outline-offset! osd offset
+Wrapper for @code{xosd_set_outline_offset}.
+
+Change @var{offset} (number of pixels) of the text outline of
+@var{osd} object.
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-shadow-color! osd color
+Wrapper for @code{xosd_set_shadow_colour}.
+
+Change @var{color} of the text shadow of @var{osd} object.
+See @code{set-osd-color!} for the meaning of @var{color}.
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-outline-color! osd color
+Wrapper for @code{xosd_set_outline_colour}.
+
+Change @var{color} of the text outline of @var{osd} object.
+See @code{set-osd-color!} for the meaning of @var{color}.
+@end deffn
+
+@deffn {Scheme Procedure} set-osd-color! osd color
+Wrapper for @code{xosd_set_colour}.
+
+Change @var{color} of @var{osd} object.  @var{color} is a string with
+the color value (e.g., @code{#2e8b57}) or the color name (e.g.,
+@code{DeepSkyBlue}).
+@end deffn
+
+@deffn {Scheme Procedure} xosd-color osd
+Wrapper for @code{xosd_get_colour}.
+
+Get RGB value of @var{osd} object's color.  Return a list of 3 numbers
+(red, green and blue).  @emph{Note:} the returned values have X11
+color format i.e., 16-bit values (0--65535), not 8-bit values
+(0--255).
+@end deffn
+
+@deffn {Scheme Procedure} osd-number-of-lines osd
+Wrapper for @code{xosd_get_number_lines}.
+
+Return the maximum number of lines allowed for @var{osd} object.
+@end deffn
+
+@deffn {Scheme Procedure} scroll-osd osd number-of-lines
+Wrapper for @code{xosd_scroll}.
+
+Scroll @var{osd} object by @var{number-of-lines}.
+@end deffn
+
+@node Higher-level wrappers
+@section Higher-level wrappers
+
+Along with the above direct wrappers for @code{libxosd} procedures,
+@code{(xosd)} module provides some higher-level interface to deal with
+OSD objects.
 
 @deffn {Scheme Procedure} make-osd [#:lines 1] [#:align] [#:position] @
        [#:bar-length] [#:timeout] [#:color] [#:font] @
        [#:horizontal-offset] [#:vertical-offset] [#:outline-offset] @
        [#:shadow-offset] [#:outline-color] [#:shadow-color]
 Create and return a new OSD object with the specified parameters.
-This procedure calls @code{(xosd-create lines)} and then
+This procedure calls @code{(create-osd lines)} and then
 @code{set-osd-@dots{}!} for the other specified keywords.
 @end deffn
 
 @deffn {Scheme Procedure} toggle-osd osd
 Hide or show @var{osd}.
-@end deffn
-
-@deffn {Scheme Procedure} display-string-in-osd osd string @
-       [line-number 0]
-Display @var{string} in the @var{line-number} of @var{osd}.
-This is a wrapper around @code{xosd-display-string} procedure.
-@end deffn
-
-@deffn {Scheme Procedure} display-percentage-in-osd osd percentage @
-       [line-number 0]
-Display @var{percentage} in the @var{line-number} of @var{osd}.
-This is a wrapper around @code{xosd-display-percentage} procedure.
-@end deffn
-
-@deffn {Scheme Procedure} display-slider-in-osd osd percentage @
-       [line-number 0]
-Display slider @var{percentage} in the @var{line-number} of @var{osd}.
-This is a wrapper around @code{xosd-display-slider} procedure.
 @end deffn
 
 @node Example
@@ -234,8 +348,7 @@ screen for 3 seconds.
 @include hello.scm
 @end lisp
 
-You can find other examples of using both @code{(xosd)} and
-@code{(xosd bindings)} modules in the
+You can find other examples of using @code{(xosd)} module in
 @file{<prefix>/share/guile-xosd/examples} directory.
 
 @node Hacking
@@ -270,7 +383,7 @@ scheme@@(guile-user)> ,use(xosd)
 If you live in Emacs, you may find @file{pre-inst-env.el} more useful.
 If you load this file (for example, with @kbd{M-x load-file}), it will
 set the environment inside Emacs, so you can run Guile in @kbd{M-x
-shell}, or more importantly start Geiser and use Guile-XOSD modules
+shell}, or more importantly, start Geiser and use Guile-XOSD modules
 there.
 
 @end itemize
