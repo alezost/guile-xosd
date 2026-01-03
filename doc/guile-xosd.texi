@@ -328,9 +328,19 @@ OSD objects.
        [#:bar-length] [#:timeout] [#:color] [#:font] @
        [#:horizontal-offset] [#:vertical-offset] [#:outline-offset] @
        [#:shadow-offset] [#:outline-color] [#:shadow-color]
+
 Create and return a new OSD object with the specified parameters.
 This procedure calls @code{(create-osd lines)} and then
-@code{set-osd-@dots{}!} for the other specified keywords.
+@code{set-osd!} with the other specified keywords.
+@end deffn
+
+@deffn {Scheme Procedure} set-osd! osd [#:align] [#:position] @
+       [#:bar-length] [#:timeout] [#:color] [#:font] @
+       [#:horizontal-offset] [#:vertical-offset] [#:outline-offset] @
+       [#:shadow-offset] [#:outline-color] [#:shadow-color]
+
+Update @var{osd} object with the specified parameters.  This procedure
+calls @code{set-osd-@dots{}!} for the respecting keywords.
 @end deffn
 
 @deffn {Scheme Procedure} toggle-osd osd

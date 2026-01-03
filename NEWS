@@ -12,6 +12,8 @@ were removed because they were duplicates of `osd-displayed?' and
 `xosd-...' symbols that were exported by (xosd bindings) module don't
 exist anymore.
 
+** `set-osd!' procedure added
+
 * Changes in 0.3 (since 0.2.2)
 
 ** Auxiliary C library was replaced with Guile code

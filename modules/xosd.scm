@@ -38,6 +38,7 @@
             osd-number-of-lines
             osd-displayed?
             wait-while-osd-displayed
+            set-osd!
             set-osd-align!
             set-osd-position!
             set-osd-bar-length!
@@ -348,39 +349,45 @@ Note: the returned values have X11 color format i.e.,
 
 ;;; Higher level procedures
 
-(define* (make-osd #:key (lines 1) align position
+(define* (set-osd! osd #:key align position
                    bar-length timeout color font
                    horizontal-offset vertical-offset
                    outline-offset shadow-offset
-                   outline-color shadow-color)
-  "Create and return a new OSD object with the specified parameters.
+                   outline-color shadow-color
+                   #:allow-other-keys)
+  "Update OSD object with the specified parameters.
+See `set-osd-...!' procedures for the meaning of the other arguments."
+  (when align
+    (set-osd-align! osd align))
+  (when position
+    (set-osd-position! osd position))
+  (when bar-length
+    (set-osd-bar-length! osd bar-length))
+  (when timeout
+    (set-osd-timeout! osd timeout))
+  (when color
+    (set-osd-color! osd color))
+  (when font
+    (set-osd-font! osd font))
+  (when horizontal-offset
+    (set-osd-horizontal-offset! osd horizontal-offset))
+  (when vertical-offset
+    (set-osd-vertical-offset! osd vertical-offset))
+  (when outline-offset
+    (set-osd-outline-offset! osd outline-offset))
+  (when shadow-offset
+    (set-osd-shadow-offset! osd shadow-offset))
+  (when outline-color
+    (set-osd-outline-color! osd outline-color))
+  (when shadow-color
+    (set-osd-shadow-color! osd shadow-color)))
+
+(define* (make-osd #:key (lines 1) #:allow-other-keys #:rest args)
+  "Create and return a new OSD object with the specified arguments.
 LINES is the number of lines that the OSD object can display.
-See 'set-osd-...' procedures for the meaning of the other arguments."
+The rest keyword arguments, ARGS, are passed to `set-osd!' procedure."
   (let ((osd (create-osd lines)))
-    (when align
-      (set-osd-align! osd align))
-    (when position
-      (set-osd-position! osd position))
-    (when bar-length
-      (set-osd-bar-length! osd bar-length))
-    (when timeout
-      (set-osd-timeout! osd timeout))
-    (when color
-      (set-osd-color! osd color))
-    (when font
-      (set-osd-font! osd font))
-    (when horizontal-offset
-      (set-osd-horizontal-offset! osd horizontal-offset))
-    (when vertical-offset
-      (set-osd-vertical-offset! osd vertical-offset))
-    (when outline-offset
-      (set-osd-outline-offset! osd outline-offset))
-    (when shadow-offset
-      (set-osd-shadow-offset! osd shadow-offset))
-    (when outline-color
-      (set-osd-outline-color! osd outline-color))
-    (when shadow-color
-      (set-osd-shadow-color! osd shadow-color))
+    (apply set-osd! osd args)
     osd))
 
 (define (toggle-osd osd)
