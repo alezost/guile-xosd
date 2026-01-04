@@ -61,7 +61,8 @@ Sleep for TIMEOUT (microseconds) after each character."
 (when (batch-mode?)
   (let ((osd (create-osd)))
     (setup-osd osd)
-    (display-by-chars "Guile-XOSD is great!!" osd)
+    (display-by-chars (string-append "Guile-XOSD " "@PACKAGE_VERSION@")
+                      osd)
     (shake-osd osd)))
 
 ;;; message.scm ends here
