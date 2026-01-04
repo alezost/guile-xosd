@@ -1,4 +1,6 @@
 -*- mode: org -*-
+[[https://www.gnu.org/licenses/gpl-3.0.txt][file:https://img.shields.io/badge/license-GPL_3-orange.svg]]
+[[https://packages.guix.gnu.org/packages/guile-xosd][file:https://packages.guix.gnu.org/packages/guile-xosd/badges/latest-version.svg]]
 
 * About
 
@@ -8,14 +10,16 @@ Guile-XOSD is the reincarnation of [[https://github.com/sigma/lisposd][lisposd]]
 bindings was written at the time (2004-2005) by Yann Hodique, and the
 rest (GNU Build System infrastructure, guile modules, documentation and
 examples) was added as a part of Guile-XOSD in 2016 by Alex Kost.
+Later, C code was removed completely, and now (since version 0.3)
+Guile-XOSD code consists only of Guile [[file:modules][modules]].
 
 * Usage
 
 From the following screenshots you can get the idea how Guile-XOSD may
 be used:
 
-- [[http://i.imgur.com/vNbFrDm.png]]
-- [[http://i.imgur.com/XCn4ysP.png]]
+- [[file:screenshots/clock.png]]
+- [[file:screenshots/percentage.png]]
 
 And here is the code to display the OSD from the second screenshot:
 
@@ -38,7 +42,7 @@ And here is the code to display the OSD from the second screenshot:
 (display-percentage 73)
 #+END_SRC
 
-The full documentation (texinfo manual) and a couple of other examples
+The full documentation (texinfo manual) and other [[file:examples][examples]]
 can be found in the source tree (and in the installed package).
 
 * Building from Git
@@ -72,8 +76,3 @@ running =make= but before running =make install=) with the help of
 $ ./pre-inst-env guile
 scheme@(guile-user)> ,use(xosd)
 #+END_SRC
-
-* Building/installing with Guix
-
-The latest version of Guile-XOSD can be installed with [[http://www.gnu.org/software/guix/][GNU Guix]]:
-[[https://packages.guix.gnu.org/packages/guile-xosd]].
