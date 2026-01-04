@@ -1,5 +1,5 @@
 define(GUILE_XOSD_CONFIGURE_COPYRIGHT, [[
-Copyright (C) 2016-2025 Alex Kost <alezost@gmail.com>
+Copyright (C) 2016-2026 Alex Kost <alezost@gmail.com>
 
 This file is part of Guile-XOSD.
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with Guile-XOSD.  If not, see <http://www.gnu.org/licenses/>.
 ]])
 
-AC_INIT([Guile-XOSD], [0.3], [alezost@gmail.com], [guile-xosd],
+AC_INIT([Guile-XOSD], [0.4], [alezost@gmail.com], [guile-xosd],
         [https://github.com/alezost/guile-xosd])
 
 AC_COPYRIGHT(GUILE_XOSD_CONFIGURE_COPYRIGHT)
