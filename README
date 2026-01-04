@@ -1,6 +1,7 @@
 -*- mode: org -*-
-[[https://www.gnu.org/licenses/gpl-3.0.txt][file:https://img.shields.io/badge/license-GPL_3-orange.svg]]
-[[https://packages.guix.gnu.org/packages/guile-xosd][file:https://packages.guix.gnu.org/packages/guile-xosd/badges/latest-version.svg]]
+
+[[https://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-orange.svg]]
+[[https://packages.guix.gnu.org/packages/guile-xosd][https://packages.guix.gnu.org/packages/guile-xosd/badges/latest-version.svg]]
 
 * About
 
