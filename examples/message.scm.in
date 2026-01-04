@@ -2,7 +2,7 @@
 !#
 ;;; message.scm --- Display a message in OSD
 
-;; Copyright © 2016 Alex Kost <alezost@gmail.com>
+;; Copyright © 2016–2026 Alex Kost <alezost@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -26,12 +26,13 @@
 (use-modules (xosd))
 
 (define (setup-osd osd)
-  (set-osd-position! osd 'middle)
-  (set-osd-align! osd 'center)
-  (set-osd-font! osd "-*-dejavu sans-bold-r-normal-*-*-300-*-*-p-*-*-1")
-  (set-osd-color! osd "yellow")
-  (set-osd-outline-color! osd "red")
-  (set-osd-outline-offset! osd 1))
+  (set-osd! osd
+            #:position 'middle
+            #:align 'center
+            #:font "-*-dejavu sans-bold-r-normal-*-*-300-*-*-p-*-*-1"
+            #:color "yellow"
+            #:outline-color "red"
+            #:outline-offset 1))
 
 (define* (display-by-chars string osd #:key (timeout 200000))
   "Display STRING in the OSD object by characters.
@@ -58,7 +59,7 @@ Sleep for TIMEOUT (microseconds) after each character."
       (loop (1- shift)))))
 
 (when (batch-mode?)
-  (let ((osd (make-osd)))
+  (let ((osd (create-osd)))
     (setup-osd osd)
     (display-by-chars "Guile-XOSD is great!!" osd)
     (shake-osd osd)))
